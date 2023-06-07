@@ -2,12 +2,12 @@
 # import the opencv library
 import cv2
 import os
-import PySpin
+import PongProcessor
 import FLIRCamera
 from dlclive import DLCLive, Processor
   
 cam = FLIRCamera.FLIRCamera()
-dlc_proc = Processor()
+dlc_proc = PongProcessor.PongProcessor()
 
 model_path = os.getcwd() + '/DLC_Ping_resnet_50_iteration-0_shuffle-1-lite/'
 dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 6, resize = 0.35)

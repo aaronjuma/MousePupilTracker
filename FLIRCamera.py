@@ -97,3 +97,6 @@ class FLIRCamera:
     
     def releaseFrame(self):
         self.image_result.Release()
+        
+    def __del__(self):
+        self.close()
