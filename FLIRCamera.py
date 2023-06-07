@@ -80,7 +80,7 @@ class FLIRCamera:
     def close(self):
         self.cam.EndAcquisition()
         self.cam.DeInit()
-        del cam
+        del self.cam
         self.cam_list.Clear()
         self.system.ReleaseInstance()
         
