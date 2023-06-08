@@ -1,13 +1,13 @@
 from dlclive import Processor
-import SerialRecorder
 
 class PongProcessor(Processor):
     def __init__(self, **kwargs):
         super().__init__()
-        self.serial = SerialRecorder.SerialRecorder()
+        self.board = kwargs['board']
+        self.isBelowThreshold = False
 
     def process(self, pose, **kwargs):
-            
+        
         # 0 is top
         # 1 is left
         # 2 is right
@@ -32,7 +32,7 @@ class PongProcessor(Processor):
             
         diam = 0
         if horzDis == None and vertDis == None:
-            diam = None
+            diam = 0
         elif horzDis == None:
             diam = vertDis
         elif vertDis == None:
@@ -40,7 +40,13 @@ class PongProcessor(Processor):
         else:
             diam = (vertDis+horzDis)/2
         
-        # self.serial.write(diam)
+        print(diam)
+        if diam < 200 and self.isBelowThreshold == False:
+            self.board.write(b'0')
+            self.isBelowThreshold = True
+        elif diam >= 200 and self.isBelowThreshold == True:
+            self.board.write(b'1')
+            self.isBelowThreshold = False
         
         return pose
 

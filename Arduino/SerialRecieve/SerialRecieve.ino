@@ -14,16 +14,14 @@ void loop() {
     int incomingByte = Serial.readString().toInt();
 
     if (incomingByte == 1) {
-      if (status == false) {
-        digitalWrite(13, HIGH);
-        status = true;
-        Serial.print("ON");
-      }
-      else {
-        digitalWrite(13, LOW);
-        status = false;
-        Serial.print("OFF");
-      }
+      digitalWrite(13, HIGH);
+      status = true;
+      Serial.print("ON");
+    }
+    else {
+      digitalWrite(13, LOW);
+      status = false;
+      Serial.print("OFF");
     }
   }
 }

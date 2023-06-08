@@ -3,19 +3,16 @@ import PySpin
 class FLIRCamera:
     
     def __init__(self):
-        print("Setting up camera..") 
-    
-    def initialize(self):
+        print("Setting up camera..")
         self.system = PySpin.System.GetInstance()
         self.cam_list = self.system.GetCameras()
         self.cam = None
-        
+    
+    def begin(self):
         if self.cam_list.GetSize() == 0:
             self.cam_list.Clear()
-            # Release system instance
             self.system.ReleaseInstance()
             return False
-        
         else:
             self.cam = self.cam_list[0]
             self.nodemap_tldevice = self.cam.GetTLDeviceNodeMap()
