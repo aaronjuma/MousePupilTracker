@@ -9,8 +9,8 @@ from dlclive import DLCLive, Processor
 cam = FLIRCamera.FLIRCamera()
 dlc_proc = PongProcessor.PongProcessor()
 
-model_path = os.getcwd() + '/DLC_Ping_resnet_50_iteration-0_shuffle-1-lite/'
-dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 6, resize = 0.35)
+model_path = os.getcwd() + '/DLC_Ping_resnet_50_iteration-1_shuffle-1/'
+dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 6, resize = 0.75)
 dlc_live.init_inference(cam.getFrame())
 cam.releaseFrame()
 

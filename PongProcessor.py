@@ -26,7 +26,7 @@ class PongProcessor(Processor):
             vertDis = None
             
         if left != None and right != None:
-            horzDis = abs(left[1]-right[1])
+            horzDis = abs(left[0]-right[0])
         else:
             horzDis = None
             
@@ -39,7 +39,7 @@ class PongProcessor(Processor):
             diam = horzDis
         else:
             diam = (vertDis+horzDis)/2
-        print(diam)
+        print(vertDis)
         
         return pose
 
