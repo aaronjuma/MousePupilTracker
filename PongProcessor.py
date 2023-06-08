@@ -39,7 +39,7 @@ class PongProcessor(Processor):
             diam = horzDis
         else:
             diam = (vertDis+horzDis)/2
-        print(vertDis)
+        print(diam)
         
         return pose
 

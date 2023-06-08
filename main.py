@@ -4,6 +4,7 @@ import cv2
 import os
 import PongProcessor
 import FLIRCamera
+import keyboard
 from dlclive import DLCLive, Processor
   
 cam = FLIRCamera.FLIRCamera()
@@ -17,14 +18,16 @@ cam.releaseFrame()
 while(True):
     frame = cam.getFrame()
     # Display the resulting frame
-    cv2.imshow('frame', frame)
+    # cv2.imshow('frame', frame)
     dlc_live.get_pose(frame)
     cam.releaseFrame()
     # the 'q' button is set as the
     # quitting button you may use any
     # desired button of your choice
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+    if keyboard.is_pressed('ENTER'):
+            print('Program is closing...')          
+            input('Done! Press Enter to exit...')
+            break                   
 
 cam.close()
 # Destroy all the windows
