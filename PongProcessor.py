@@ -1,9 +1,10 @@
 from dlclive import Processor
+import SerialRecorder
 
 class PongProcessor(Processor):
     def __init__(self, **kwargs):
         super().__init__()
-        self.diameter = None
+        self.serial = SerialRecorder.SerialRecorder()
 
     def process(self, pose, **kwargs):
             
@@ -29,7 +30,7 @@ class PongProcessor(Processor):
         else:
             horzDis = None
             
-        diam = -1
+        diam = 0
         if horzDis == None and vertDis == None:
             diam = None
         elif horzDis == None:
@@ -39,7 +40,7 @@ class PongProcessor(Processor):
         else:
             diam = (vertDis+horzDis)/2
         
-        self.diameter = diam
+        # self.serial.write(diam)
         
         return pose
 

@@ -6,12 +6,18 @@ import PongProcessor
 import FLIRCamera
 import keyboard
 from dlclive import DLCLive, Processor
-  
-cam = FLIRCamera.FLIRCamera()
-dlc_proc = PongProcessor.PongProcessor()
 
+cam = FLIRCamera.FLIRCamera()
+
+if cam.initialize() == False:
+    print("Unable to find camera")
+    print("Exiting program...")
+    quit()
+
+dlc_proc = PongProcessor.PongProcessor()
 model_path = os.getcwd() + '/DLC_Ping_resnet_50_iteration-1_shuffle-1/'
 dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 6, resize = 0.75)
+
 dlc_live.init_inference(cam.getFrame())
 cam.releaseFrame()
 
@@ -21,14 +27,11 @@ while(True):
     # cv2.imshow('frame', frame)
     dlc_live.get_pose(frame)
     cam.releaseFrame()
-    # the 'q' button is set as the
-    # quitting button you may use any
-    # desired button of your choice
+
+    #Leave the program, press enter
     if keyboard.is_pressed('ENTER'):
-            print('Program is closing...')          
-            input('Done! Press Enter to exit...')
             break                   
 
 cam.close()
-# Destroy all the windows
-cv2.destroyAllWindows()
+# cv2.destroyAllWindows()
+print("Exiting program...")

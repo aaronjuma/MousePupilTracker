@@ -3,27 +3,21 @@ import PySpin
 class FLIRCamera:
     
     def __init__(self):
-        if self.initialize():
-            print("CAMERA GOOD!")
-        else:
-            print("CAMERA ERROR")        
-        
+        print("Setting up camera..") 
     
     def initialize(self):
         self.system = PySpin.System.GetInstance()
         self.cam_list = self.system.GetCameras()
-        self.cam = self.cam_list[0]
+        self.cam = None
         
         if self.cam_list.GetSize() == 0:
             self.cam_list.Clear()
             # Release system instance
             self.system.ReleaseInstance()
-
-            print('Not enough cameras!')
-            input('Done! Press Enter to exit...')
             return False
         
         else:
+            self.cam = self.cam_list[0]
             self.nodemap_tldevice = self.cam.GetTLDeviceNodeMap()
             self.cam.Init()
             self.nodemap = self.cam.GetNodeMap()
@@ -78,12 +72,12 @@ class FLIRCamera:
         return True
             
     def close(self):
-        self.cam.EndAcquisition()
-        self.cam.DeInit()
-        del self.cam
-        self.cam_list.Clear()
-        self.system.ReleaseInstance()
-        
+        if self.cam != None:
+            self.cam.EndAcquisition()
+            self.cam.DeInit()
+            del self.cam
+            self.cam_list.Clear()
+            self.system.ReleaseInstance()
         
     def getFrame(self):
         image_data = None
@@ -97,7 +91,3 @@ class FLIRCamera:
     
     def releaseFrame(self):
         self.image_result.Release()
-        
-    def __del__(self):
-        if self.cam:
-            self.close()
