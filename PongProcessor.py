@@ -1,13 +1,12 @@
 from dlclive import Processor
-import time
-import math
 
 class PongProcessor(Processor):
     def __init__(self, **kwargs):
         super().__init__()
+        self.diameter = None
 
     def process(self, pose, **kwargs):
-        
+            
         # 0 is top
         # 1 is left
         # 2 is right
@@ -39,7 +38,8 @@ class PongProcessor(Processor):
             diam = horzDis
         else:
             diam = (vertDis+horzDis)/2
-        print(diam)
+        
+        self.diameter = diam
         
         return pose
 
