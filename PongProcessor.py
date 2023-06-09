@@ -1,10 +1,12 @@
 from dlclive import Processor
+import Graph
 
 class PongProcessor(Processor):
     def __init__(self, **kwargs):
         super().__init__()
         self.board = kwargs['board']
         self.isBelowThreshold = False
+        self.graph = Graph.Graph()
 
     def process(self, pose, **kwargs):
         
@@ -47,6 +49,7 @@ class PongProcessor(Processor):
         elif diam >= 200 and self.isBelowThreshold == True:
             self.board.write(b'1')
             self.isBelowThreshold = False
+        self.graph.animate(diam)
         
         return pose
 

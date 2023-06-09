@@ -4,19 +4,16 @@ import matplotlib.animation as animation
 
 class Graph:
     def __init__(self):
+        plt.ion()
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(1, 1, 1)
         self.xs = []
         self.ys = []
-        self.data = 0
         self.start_time = time.time()
         
-    def update(self, num):
-        self.data = num
-        
-    def animate(self, i, xs, ys):
+    def animate(self, num):
         self.xs.append(round(time.time() - self.start_time))
-        self.ys.append(self.data)
+        self.ys.append(num)
 
         # Limit x and y lists to 20 items
         self.xs = self.xs[-20:]
@@ -30,7 +27,5 @@ class Graph:
         plt.title('Size of Circle Over Time')
         plt.ylabel('Size (pixels)')
         plt.xlabel('Time')
-        
-    def initGraph(self):
-        self.ani = animation.FuncAnimation(self.fig, self.animate, fargs=(self.xs, self.ys), interval=1000)
-        plt.show()
+        self.fig.canvas.draw()
+        self.fig.canvas.flush_events()
