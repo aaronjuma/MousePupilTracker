@@ -30,7 +30,7 @@ def main():
 
     while(True):
         frame = cam.getFrame()
-        dlc_live.get_pose(frame, board=arduino)
+        dlc_live.get_pose(frame)
         cam.releaseFrame()
 
         #Leave the program, press enter
