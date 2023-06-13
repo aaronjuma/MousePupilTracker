@@ -4,7 +4,7 @@ import cv2
 import sys
 import os
 import PongProcessor
-import FLIRCamera
+import Cameras.FLIRCamera as FLIRCamera
 import keyboard
 import SerialRecorder
 from dlclive import DLCLive, Processor
