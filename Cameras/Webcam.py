@@ -8,6 +8,7 @@ class Webcam:
     
     def start(self):
         self.cam = cv2.VideoCapture(0)
+        grabbed, frame = self.cam.read()
         if not self.cam.isOpened():
             return False
         return True

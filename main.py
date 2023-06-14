@@ -4,39 +4,43 @@ import cv2
 import sys
 import os
 import PongProcessor
+import Cameras.Webcam as Webcam
 import Cameras.FLIRCamera as FLIRCamera
 import keyboard
 import SerialRecorder
-from dlclive import DLCLive, Processor
+import Logger
+from dlclive import DLCLive
 
 def main():
-    arduino = SerialRecorder.SerialRecorder()
-    cam = FLIRCamera.FLIRCamera()
+    # arduino = SerialRecorder.SerialRecorder()
+    cam = Webcam.Webcam()
     
-    if arduino.status() == False:
-        print("Unable to find arduino")
-        return False
+    # if arduino.status() == False:
+    #     print("Unable to find arduino")
+    #     return False
     
-    if cam.begin() == False:
+    if cam.start() == False:
         print("Camera Error")
         return False
     
-    dlc_proc = PongProcessor.PongProcessor(board = arduino)
+    dlc_proc = PongProcessor.PongProcessor()
     model_path = os.getcwd() + '/DLC_Ping_resnet_50_iteration-1_shuffle-1/'
     dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 6, resize = 0.50)
-
     dlc_live.init_inference(cam.getFrame())
-    cam.releaseFrame()
+
+    logger = Logger.Logger()
+    logger.initialize('log1.csv')
 
     while(True):
         frame = cam.getFrame()
         dlc_live.get_pose(frame)
-        cam.releaseFrame()
+        logger.update(dlc_proc.getDiamater())
 
         #Leave the program, press enter
         if keyboard.is_pressed('ENTER'):
-                break                   
+            break                   
 
+    logger.stop()
     cam.close()
     print("Exiting program...")
     return True

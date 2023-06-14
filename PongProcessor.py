@@ -4,9 +4,7 @@ import Graph
 class PongProcessor(Processor):
     def __init__(self, **kwargs):
         super().__init__()
-        self.board = kwargs['board']
-        self.isBelowThreshold = False
-        self.graph = Graph.Graph()
+        self.diameter = 0
 
     def process(self, pose, **kwargs):
         
@@ -32,26 +30,19 @@ class PongProcessor(Processor):
         else:
             horzDis = None
             
-        diam = 0
         if horzDis == None and vertDis == None:
-            diam = 0
+            self.diam = 0
         elif horzDis == None:
-            diam = vertDis
+            self.diam = vertDis
         elif vertDis == None:
-            diam = horzDis
+            self.diam = horzDis
         else:
-            diam = (vertDis+horzDis)/2
-        
-        print(diam)
-        if diam < 200 and self.isBelowThreshold == False:
-            self.board.write(b'0')
-            self.isBelowThreshold = True
-        elif diam >= 200 and self.isBelowThreshold == True:
-            self.board.write(b'1')
-            self.isBelowThreshold = False
-        self.graph.animate(diam)
+            self.diam = (vertDis+horzDis)/2
         
         return pose
+
+    def getDiamater(self):
+        return self.diam
 
     def save(self, filename):
         return 0
