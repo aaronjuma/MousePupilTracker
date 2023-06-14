@@ -27,7 +27,7 @@ def main():
     
     dlc_proc = PongProcessor.PongProcessor()
     model_path = os.getcwd() + '/DLC_Ping_resnet_50_iteration-1_shuffle-1/'
-    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 6, resize = 0.50)
+    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 6, resize = 0.75)
     dlc_live.init_inference(cam.getFrame())
 
     logger = Logger.Logger()
@@ -49,6 +49,7 @@ def main():
         if keyboard.is_pressed('ENTER'):
             break                   
 
+    p.terminate()
     logger.stop()
     cam.close()
     print("Exiting program...")
