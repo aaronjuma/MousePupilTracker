@@ -25,12 +25,11 @@ class Logger:
             x = round(time.time() - self.startTime, 1)
             y = self.data
             print(f'{x},{y}', file=open(self.filename,'a')) 
-            time.sleep(0.2)
+            time.sleep(0.5)
             
     def update(self, data):
         self.data = data
             
     def stop(self):
         self.running = False
-        self.file.close()
         

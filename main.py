@@ -9,6 +9,8 @@ import Cameras.FLIRCamera as FLIRCamera
 import keyboard
 import SerialRecorder
 import Logger
+import Graph
+import multiprocessing
 from dlclive import DLCLive
 
 def main():
@@ -30,11 +32,18 @@ def main():
 
     logger = Logger.Logger()
     logger.initialize('log1.csv')
+    
+    graph = Graph.Graph()
+    d = multiprocessing.Value('d', 0.0)
+    p = multiprocessing.Process(target=graph.plot, args=(d,))
+    p.start()
 
     while(True):
         frame = cam.getFrame()
         dlc_live.get_pose(frame)
-        logger.update(dlc_proc.getDiamater())
+        dia = dlc_proc.getDiamater()
+        logger.update(dia)
+        d.value = dia
 
         #Leave the program, press enter
         if keyboard.is_pressed('ENTER'):
