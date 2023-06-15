@@ -14,10 +14,10 @@ unsigned long prev = 0;
 unsigned long curr = disk.read();
 unsigned long prevT = 0;
 unsigned long currT = millis();
-bool signalSent = false;
 unsigned long timeSinceSignal = 0;
-bool potentialHigh = false;
 unsigned long timer = 0;
+bool signalSent = false;
+bool potentialHigh = false;
 
 void loop() {
   delay(20);
@@ -26,7 +26,6 @@ void loop() {
   prevT = currT;
   currT = millis();
   unsigned long speed = ((curr-prev)/4096.0)*1000.0/(currT-prevT); //revs/sec
-//  Serial.println(abs(speed));
 
   if (signalSent == false){
     if (abs(speed) >= 3){
