@@ -11,6 +11,7 @@ class Logger:
         self.startTime = 0
         
     def initialize(self, filename):
+        print("Beginning to log items...")
         self.filename = filename
         with open(self.filename, 'w') as f:
             f.write('time,diameter\n')

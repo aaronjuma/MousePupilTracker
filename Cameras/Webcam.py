@@ -3,10 +3,10 @@ import cv2
 class Webcam:
     
     def __init__(self):
-        print("Setting up camera..")
         self.cam = None
     
     def start(self):
+        print("Setting up camera..")
         self.cam = cv2.VideoCapture(0)
         grabbed, frame = self.cam.read()
         if not self.cam.isOpened():

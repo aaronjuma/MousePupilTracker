@@ -28,5 +28,6 @@ class Graph:
         
     def plot(self, data):
         self.data = data
+        print("Beginning Plot...")
         ani = animation.FuncAnimation(self.fig, self.animate, interval=500)
         plt.show()

@@ -14,7 +14,7 @@ import multiprocessing
 from dlclive import DLCLive
 
 # CONFIG VARIABLES
-LOGGER_STATUS = False
+LOGGER_STATUS = True
 GRAPH_STATUS = True
 
 def main():
@@ -47,6 +47,7 @@ def main():
         p = multiprocessing.Process(target=graph.plot, args=(d,))
         p.start()
 
+    print("Press 'enter' to exit the program...")
     # Runs the program
     while(True):
         frame = cam.getFrame()
