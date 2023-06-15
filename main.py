@@ -4,8 +4,7 @@ import cv2
 import sys
 import os
 import PongProcessor
-import Cameras.Webcam as Webcam
-import Cameras.FLIRCamera as FLIRCamera
+import Webcam as Webcam
 import keyboard
 import SerialRecorder
 import Logger
@@ -15,7 +14,7 @@ from dlclive import DLCLive
 
 # CONFIG VARIABLES
 LOGGER_STATUS = False
-GRAPH_STATUS = False
+GRAPH_STATUS = True
 
 def main():
     # arduino = SerialRecorder.SerialRecorder()
