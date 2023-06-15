@@ -18,4 +18,6 @@ class Webcam:
         
     def getFrame(self):
         ret, frame = self.cam.read()
+        frame = cv2.resize(frame, (640, 512))
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         return frame

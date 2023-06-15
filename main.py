@@ -14,8 +14,8 @@ import multiprocessing
 from dlclive import DLCLive
 
 # CONFIG VARIABLES
-LOGGER_STATUS = True
-GRAPH_STATUS = True
+LOGGER_STATUS = False
+GRAPH_STATUS = False
 
 def main():
     # arduino = SerialRecorder.SerialRecorder()
