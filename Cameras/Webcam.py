@@ -10,6 +10,7 @@ class Webcam:
         self.cam = cv2.VideoCapture(0)
         self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 512)
+        self.cam.set(cv2.CAP_PROP_FPS, 30)
         grabbed, frame = self.cam.read()
         if not self.cam.isOpened():
             return False
