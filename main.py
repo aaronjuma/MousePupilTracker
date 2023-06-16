@@ -1,6 +1,3 @@
-
-# import the opencv library
-import cv2
 import sys
 import os
 import PongProcessor
