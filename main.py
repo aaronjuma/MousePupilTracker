@@ -1,6 +1,6 @@
 import sys
 import os
-import PongProcessor
+import PupilProcessor
 import Webcam as Webcam
 import keyboard
 import SerialRecorder
@@ -26,7 +26,7 @@ def main():
         return False
     
     # DeepLabCut Setup
-    dlc_proc = PongProcessor.PongProcessor()
+    dlc_proc = PupilProcessor.PupilProcessor()
     model_path = os.getcwd() + '/DLC_Mouse_resnet_50_iteration-0_shuffle-1/'
     dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 3, resize = 0.6)
     dlc_live.init_inference(cam.getFrame())

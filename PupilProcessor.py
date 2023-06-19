@@ -1,7 +1,7 @@
 from dlclive import Processor
 import Graph
 
-class PongProcessor(Processor):
+class PupilProcessor(Processor):
     def __init__(self, **kwargs):
         super().__init__()
         self.diameter = 0
