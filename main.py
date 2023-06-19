@@ -28,7 +28,7 @@ def main():
     # DeepLabCut Setup
     dlc_proc = PongProcessor.PongProcessor()
     model_path = os.getcwd() + '/DLC_Mouse_resnet_50_iteration-0_shuffle-1/'
-    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 5, resize = 0.6)
+    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 3, resize = 0.6)
     dlc_live.init_inference(cam.getFrame())
 
     # Logging Setup
