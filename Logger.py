@@ -13,7 +13,7 @@ class Logger:
     def initialize(self, filename):
         print("Beginning to log items...")
         self.filename = filename
-        with open(self.filename, 'w') as f:
+        with open('Data/'+self.filename, 'w') as f:
             f.write('time,diameter\n')
         self.running = True
         self.startTime = time.time()
