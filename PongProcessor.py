@@ -13,9 +13,9 @@ class PongProcessor(Processor):
         # 2 is right
         # 3 is bot
         top = [round(n) for n in pose[0]] if pose[0, 2] > 0.8 else None
-        left = [round(n) for n in pose[1]] if pose[1, 2] > 0.8 else None
-        right = [round(n) for n in pose[2]] if pose[2, 2] > 0.8 else None
-        bot = [round(n) for n in pose[3]] if pose[3, 2] > 0.8 else None
+        left = [round(n) for n in pose[2]] if pose[1, 2] > 0.8 else None
+        right = [round(n) for n in pose[3]] if pose[2, 2] > 0.8 else None
+        bot = [round(n) for n in pose[1]] if pose[3, 2] > 0.8 else None
             
         vertDis = -1
         horzDis = -1

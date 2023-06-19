@@ -11,6 +11,16 @@ class Webcam:
         self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 512)
         self.cam.set(cv2.CAP_PROP_FPS, 30)
+        self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        self.cam.set(cv2.CAP_PROP_BRIGHTNESS, 5)
+        self.cam.set(cv2.CAP_PROP_CONTRAST, 64)
+        self.cam.set(cv2.CAP_PROP_HUE, 0)
+        self.cam.set(cv2.CAP_PROP_SATURATION, 0)
+        self.cam.set(cv2.CAP_PROP_SHARPNESS, 6)
+        self.cam.set(cv2.CAP_PROP_GAMMA, 100)
+        self.cam.set(cv2.CAP_PROP_GAIN, 0)
+        self.cam.set(cv2.CAP_PROP_EXPOSURE, -6)
         grabbed, frame = self.cam.read()
         if not self.cam.isOpened():
             return False
@@ -22,4 +32,5 @@ class Webcam:
     def getFrame(self):
         ret, frame = self.cam.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        frame = cv2.rotate(frame, cv2.ROTATE_180)
         return frame

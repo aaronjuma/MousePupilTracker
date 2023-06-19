@@ -6,7 +6,7 @@ multianimalproject: false
 identity:
 
     # Project path (change when moving around)
-project_path: C:\Users\imorozov\Desktop\Mouse-Aaron-2023-06-19
+project_path: C:/Users/imorozov/Documents/MousePupilTracker/Mouse-Aaron-2023-06-19
 
     # Annotation data set configuration (and individual video cropping parameters)
 video_sets:
@@ -17,7 +17,12 @@ bodyparts:
 - bottom
 - left
 - right
-- center
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
 
     # Fraction of video to start/stop when extracting frames for labeling/refinement
 start: 0
