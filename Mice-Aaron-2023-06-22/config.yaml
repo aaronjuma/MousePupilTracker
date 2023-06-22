@@ -6,7 +6,7 @@ multianimalproject: false
 identity:
 
     # Project path (change when moving around)
-project_path: C:\Users\imorozov\Documents\MousePupilTracker\Mice-Aaron-2023-06-22
+project_path: /content/drive/My Drive/Mice-Aaron-2023-06-22
 
     # Annotation data set configuration (and individual video cropping parameters)
 video_sets:
@@ -31,6 +31,8 @@ bodyparts:
     # Fraction of video to start/stop when extracting frames for labeling/refinement
 
     # Fraction of video to start/stop when extracting frames for labeling/refinement
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
 start: 0
 stop: 1
 numframes2pick: 20
@@ -43,7 +45,7 @@ skeleton:
   - bodypart3
 skeleton_color: black
 pcutoff: 0.6
-dotsize: 12
+dotsize: 5
 alphavalue: 0.7
 colormap: rainbow
 
