@@ -10,9 +10,9 @@ import multiprocessing
 from dlclive import DLCLive
 
 # CONFIG VARIABLES
-LOGGER_STATUS = False
+LOGGER_STATUS = True
 GRAPH_STATUS = True
-ARDUINO_STATUS = False
+ARDUINO_STATUS = True
 
 def main():
     # Camera Setup

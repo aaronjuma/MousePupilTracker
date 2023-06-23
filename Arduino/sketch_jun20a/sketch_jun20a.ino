@@ -5,19 +5,45 @@ void setup() {
   digitalWrite(13, LOW);
 }
 
-int val = 70;
+bool signalSent = false;
+unsigned long timeSinceSignal = 0;
+bool potentialHigh = false;
+unsigned long timer = 0;
+int val = 0;
+
 void loop() {
-  // put your main code here, to run repeatedly:
   if(Serial.available()){
     String incomingByte = Serial.readString();
     val = incomingByte.toInt();
   }
 
-  if (val >= 60) {
-    digitalWrite(13, HIGH);
-    delay(5000);
+  if (signalSent == false){
+    if (val >= 50){
+      if (potentialHigh == false){
+        timer = millis();
+        potentialHigh = true;
+      }
+      else{
+        unsigned long timeDiff = (millis() - timer)/1000.0;
+        if(timeDiff >= 5){
+          signalSent = true;
+          digitalWrite(13, HIGH);
+          potentialHigh = false;
+          timeSinceSignal = millis();
+        }
+      }
+    }
+    else{
+      potentialHigh = false;
+    }
   }
-  else {
-    digitalWrite(13, LOW);
+  else{
+    unsigned long timeDiff = (millis() - timeSinceSignal)/1000.0;
+    if(timeDiff >= 10){
+      digitalWrite(13, LOW);
+      signalSent = false;
+      potentialHigh = false;
+    }
   }
+      
 }
