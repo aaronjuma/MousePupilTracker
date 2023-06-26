@@ -10,9 +10,10 @@ import multiprocessing
 from dlclive import DLCLive
 
 # CONFIG VARIABLES
-LOGGER_STATUS = True
+LOGGER_STATUS = False
 GRAPH_STATUS = True
-ARDUINO_STATUS = True
+
+ARDUINO_STATUS = False
 
 def main():
     # Camera Setup
@@ -23,8 +24,8 @@ def main():
     
     # DeepLabCut Setup
     dlc_proc = PupilProcessor.PupilProcessor()
-    model_path = os.getcwd() + '/DLC_Mice_resnet_50_iteration-0_shuffle-1/'
-    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 3, resize = 0.75)
+    model_path = os.getcwd() + '/DLC_Mice_resnet_50_iteration-1_shuffle-1/'
+    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 3, resize = 1)
     dlc_live.init_inference(cam.getFrame())
 
     # Logging Setup

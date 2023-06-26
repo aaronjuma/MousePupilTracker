@@ -13,8 +13,8 @@ cap.set(cv2.CAP_PROP_HUE, 0)
 cap.set(cv2.CAP_PROP_SATURATION, 60)
 cap.set(cv2.CAP_PROP_SHARPNESS, 6)
 cap.set(cv2.CAP_PROP_GAMMA, 100)
-cap.set(cv2.CAP_PROP_GAIN, 0)
-cap.set(cv2.CAP_PROP_EXPOSURE, -9)
+cap.set(cv2.CAP_PROP_GAIN, 35)
+cap.set(cv2.CAP_PROP_EXPOSURE, -7)
 
 writer= cv2.VideoWriter('Data/basicvideo.mp4', cv2.VideoWriter_fourcc(*"MPJG"), 30.0, (width,height))
 record = False

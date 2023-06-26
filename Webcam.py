@@ -17,8 +17,8 @@ class Webcam:
         self.cam.set(cv2.CAP_PROP_SATURATION, 60)
         self.cam.set(cv2.CAP_PROP_SHARPNESS, 6)
         self.cam.set(cv2.CAP_PROP_GAMMA, 100)
-        self.cam.set(cv2.CAP_PROP_GAIN, 0)
-        self.cam.set(cv2.CAP_PROP_EXPOSURE, -9)
+        self.cam.set(cv2.CAP_PROP_GAIN, 35)
+        self.cam.set(cv2.CAP_PROP_EXPOSURE, -7)
         grabbed, frame = self.cam.read()
         if not self.cam.isOpened():
             return False

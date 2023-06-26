@@ -6,7 +6,7 @@ multianimalproject: false
 identity:
 
     # Project path (change when moving around)
-project_path: /content/drive/My Drive/Mice-Aaron-2023-06-22
+project_path: C:/Users/imorozov/Desktop/Mice-Aaron-2023-06-22
 
     # Annotation data set configuration (and individual video cropping parameters)
 video_sets:
@@ -16,11 +16,27 @@ video_sets:
     crop: 0, 640, 0, 480
   C:\Users\imorozov\Documents\MousePupilTracker\Mice-Aaron-2023-06-22\videos\Mouse3.mp4:
     crop: 0, 640, 0, 480
+  C:\Users\imorozov\Documents\MousePupilTracker\Data\basicvideo.mp4:
+    crop: 0, 640, 0, 480
 bodyparts:
 - top
 - bottom
 - left
 - right
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
+
+    # Fraction of video to start/stop when extracting frames for labeling/refinement
 
     # Fraction of video to start/stop when extracting frames for labeling/refinement
 
@@ -52,7 +68,7 @@ colormap: rainbow
     # Training,Evaluation and Analysis configuration
 TrainingFraction:
 - 0.95
-iteration: 0
+iteration: 1
 default_net_type: resnet_50
 default_augmenter: default
 snapshotindex: -1

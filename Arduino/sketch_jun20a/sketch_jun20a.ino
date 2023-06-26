@@ -25,7 +25,7 @@ void loop() {
       }
       else{
         unsigned long timeDiff = (millis() - timer)/1000.0;
-        if(timeDiff >= 5){
+        if(timeDiff >= 5){ //5 seconds
           signalSent = true;
           digitalWrite(13, HIGH);
           potentialHigh = false;
@@ -39,7 +39,7 @@ void loop() {
   }
   else{
     unsigned long timeDiff = (millis() - timeSinceSignal)/1000.0;
-    if(timeDiff >= 10){
+    if(timeDiff >= 10){ //10 seconds
       digitalWrite(13, LOW);
       signalSent = false;
       potentialHigh = false;
