@@ -1,0 +1,6 @@
+model_checkpoint_path: "/content/drive/My Drive/Mice-Aaron-2023-07-04/dlc-models/iteration-0/MiceJul4-trainset95shuffle1/train/snapshot-80000"
+all_model_checkpoint_paths: "/content/drive/My Drive/Mice-Aaron-2023-07-04/dlc-models/iteration-0/MiceJul4-trainset95shuffle1/train/snapshot-60000"
+all_model_checkpoint_paths: "/content/drive/My Drive/Mice-Aaron-2023-07-04/dlc-models/iteration-0/MiceJul4-trainset95shuffle1/train/snapshot-65000"
+all_model_checkpoint_paths: "/content/drive/My Drive/Mice-Aaron-2023-07-04/dlc-models/iteration-0/MiceJul4-trainset95shuffle1/train/snapshot-70000"
+all_model_checkpoint_paths: "/content/drive/My Drive/Mice-Aaron-2023-07-04/dlc-models/iteration-0/MiceJul4-trainset95shuffle1/train/snapshot-75000"
+all_model_checkpoint_paths: "/content/drive/My Drive/Mice-Aaron-2023-07-04/dlc-models/iteration-0/MiceJul4-trainset95shuffle1/train/snapshot-80000"
