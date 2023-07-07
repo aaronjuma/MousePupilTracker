@@ -24,8 +24,8 @@ def main():
     
     # DeepLabCut Setup
     dlc_proc = PupilProcessor.PupilProcessor()
-    model_path = os.getcwd() + '/DLC_Mice_resnet_50_iteration-2_shuffle-1/'
-    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 3, resize = 0.6)
+    model_path = os.getcwd() + '/DLC_Mice_resnet_50_iteration-1_shuffle-1/'
+    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 2, resize = 1)
     dlc_live.init_inference(cam.getFrame())
 
     # Logging Setup
