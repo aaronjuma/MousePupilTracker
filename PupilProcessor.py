@@ -43,7 +43,7 @@ class PupilProcessor(Processor):
             return pose
         
         referencePixel = math.sqrt((pose[9, 0] - pose[10,0])**2 + (pose[9, 1] - pose[10, 1])**2)
-        ratio = 2.0/referencePixel
+        ratio = 1.8/referencePixel
 
         self.diameter = (radiusSum/activePos)*2*ratio
         
