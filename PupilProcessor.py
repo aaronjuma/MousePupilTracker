@@ -1,5 +1,6 @@
 from dlclive import Processor
 import Graph
+import math
 
 class PupilProcessor(Processor):
     def __init__(self, **kwargs):
@@ -8,41 +9,43 @@ class PupilProcessor(Processor):
 
     def process(self, pose, **kwargs):
         
-        # 0 is top
-        # 1 is left
-        # 2 is right
-        # 3 is bot
-        top = [round(n) for n in pose[0]] if pose[0, 2] > 0.8 else None
-        left = [round(n) for n in pose[2]] if pose[2, 2] > 0.8 else None
-        right = [round(n) for n in pose[3]] if pose[3, 2] > 0.8 else None
-        bot = [round(n) for n in pose[1]] if pose[1, 2] > 0.8 else None
-            
-        vertDis = -1
-        horzDis = -1
+        # 0 top
+        # 1 bottom
+        # 2 left
+        # 3 right
+        # 4 topleft
+        # 5 topright
+        # 6 bottomleft
+        # 7 bottomright
+        # 8 center
+
+        # IF CENTER IS NOT FOUND
+        if pose[8, 2] < 0.5:
+            self.diameter = 0
+            return pose
+
+        centerX = round(pose[8, 0])
+        centerY = round(pose[8, 1])
+        radiusSum = 0
+        activePos = 0
+
+        for i in range(0, 8):
+            if pose[i, 2] > 0.8:
+                x_ = round(pose[i, 0])
+                y_ = round(pose[i, 1])
+                radius = math.sqrt((x_ - centerX)**2 + (y_ - centerY)**2)
+                radiusSum += radius
+                activePos += 1
         
-        if top != None and bot != None:
-            vertDis = abs(top[1] - bot[1])
-        else:
-            vertDis = None
-            
-        if left != None and right != None:
-            horzDis = abs(left[0]-right[0])
-        else:
-            horzDis = None
-            
-        if horzDis == None and vertDis == None:
-            self.diam = 0
-        elif horzDis == None:
-            self.diam = vertDis
-        elif vertDis == None:
-            self.diam = horzDis
-        else:
-            self.diam = (vertDis+horzDis)/2
+        if activePos == 0:
+            return pose
+        
+        self.diameter = (radiusSum/activePos)*2
         
         return pose
 
     def getDiamater(self):
-        return self.diam
+        return self.diameter
 
     def save(self, filename):
         return 0
