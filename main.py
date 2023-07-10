@@ -12,7 +12,7 @@ from dlclive import DLCLive
 # CONFIG VARIABLES
 LOGGER_STATUS = False
 GRAPH_STATUS = True
-ARDUINO_STATUS = False
+ARDUINO_STATUS = True
 
 def main():
     # Camera Setup
@@ -24,13 +24,13 @@ def main():
     # DeepLabCut Setup
     dlc_proc = PupilProcessor.PupilProcessor()
     model_path = os.getcwd() + '/DLC_Mice_resnet_50_iteration-1_shuffle-1/'
-    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 2, resize = 1)
+    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 1, resize = 1)
     dlc_live.init_inference(cam.getFrame())
 
     # Logging Setup
     if LOGGER_STATUS:
         logger = Logger.Logger()
-        logger.initialize('log1.csv')
+        logger.initialize()
     
     # Graphing Setup
     if GRAPH_STATUS:
@@ -59,7 +59,7 @@ def main():
         if ARDUINO_STATUS: arduino.update(dia)
 
         #Leave the program, press enter
-        if keyboard.is_pressed('ENTER'):
+        if keyboard.is_pressed('ESC'):
             break                   
 
     # Ends the program

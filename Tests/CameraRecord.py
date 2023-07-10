@@ -15,7 +15,7 @@ cap.set(cv2.CAP_PROP_EXPOSURE, -7)
 
 width= int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height= int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-writer= cv2.VideoWriter('Data/basicvideo.mp4', cv2.VideoWriter_fourcc(*"MPJG"), 30.0, (width,height))
+writer= cv2.VideoWriter('Data/Videos/basicvideo.mp4', cv2.VideoWriter_fourcc(*"MPJG"), 30.0, (width,height))
 record = False
 
 while True:
