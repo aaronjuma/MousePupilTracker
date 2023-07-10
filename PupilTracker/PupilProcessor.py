@@ -1,5 +1,5 @@
 from dlclive import Processor
-import Graph
+import PupilTracker.Graph as Graph
 import math
 
 class PupilProcessor(Processor):

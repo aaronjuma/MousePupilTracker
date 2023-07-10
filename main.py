@@ -1,18 +1,17 @@
 import sys
 import os
-import PupilProcessor
-import Webcam as Webcam
+import PupilTracker.PupilProcessor as PupilProcessor
+import PupilTracker.Webcam as Webcam
 import keyboard
-import SerialRecorder
-import Logger
-import Graph
+import PupilTracker.SerialRecorder as SerialRecorder
+import PupilTracker.Logger as Logger
+import PupilTracker.Graph as Graph
 import multiprocessing
 from dlclive import DLCLive
 
 # CONFIG VARIABLES
 LOGGER_STATUS = False
 GRAPH_STATUS = True
-
 ARDUINO_STATUS = False
 
 def main():
@@ -70,9 +69,6 @@ def main():
     cam.close()
     print("Exiting program...")
     return True
-    
-    
-    
 
 if __name__ == '__main__':
     if main():
