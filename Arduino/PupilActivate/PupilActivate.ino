@@ -2,18 +2,10 @@
 Arduino Sketch for Activating TTL based on Eye Pupil Size
 */
 
-
 //PARAMTERS TO CHANGE
 unsigned long eyeThreshold = 1.0; //Diameter of the eye (mm) required to activate system
 unsigned long timeThreshold = 5; //How much time (seconds) the eye has to stay past the threshold to activate
 unsigned long cooldown = 10; //How much time before activating system again after activating
-
-void setup() {
-  Serial.begin(9600);
-  Serial.setTimeout(100);
-  pinMode(13, OUTPUT);
-  digitalWrite(13, LOW);
-}
 
 //Logic Variables
 bool signalSent = false;
@@ -22,6 +14,12 @@ bool potentialHigh = false;
 unsigned long timer = 0;
 float val = 0;
 
+void setup() {
+  Serial.begin(9600);
+  Serial.setTimeout(100);
+  pinMode(13, OUTPUT);
+  digitalWrite(13, LOW);
+}
 
 void loop() {
   // Checks if we got a signal from the computer
@@ -49,7 +47,7 @@ void loop() {
         //Checks if the time elapsed since first hitting the threshold has reached the time threshold
         if(timeDiff >= timeThreshold){
           signalSent = true;
-          digitalWrite(13, HIGH); //Sends signal (NEEDS TO CHANGE FOR TTL)
+          activate();
           potentialHigh = false;
           timeSinceSignal = millis();
         }
@@ -68,9 +66,19 @@ void loop() {
 
     //Checks if the the cooldown is good and the system is ready to send a signal again
     if(timeDiff >= cooldown){ //10 seconds
-      digitalWrite(13, LOW);
+      deactivate();
       signalSent = false;
       potentialHigh = false;
     }
   }
+}
+
+
+//Code for activating system (NEEDS CHANGE FOR TTL)
+void activate() {
+  digitalWrite(13, HIGH); //Activates System (NEEDS CHANGE FOR TTL)
+}
+
+void deactivate() {
+  digitalWrite(13, LOW);
 }
