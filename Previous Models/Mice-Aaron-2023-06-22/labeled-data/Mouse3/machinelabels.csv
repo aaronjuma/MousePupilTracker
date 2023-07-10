@@ -1,4 +1,0 @@
-scorer,,,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000,DLC_resnet50_MiceJun22shuffle1_55000
-bodyparts,,,top,top,top,bottom,bottom,bottom,left,left,left,right,right,right
-coords,,,x,y,likelihood,x,y,likelihood,x,y,likelihood,x,y,likelihood
-labeled-data,Mouse3,img0167.png,275.61529541015625,250.74278259277344,0.999869704246521,273.5162353515625,308.1800842285156,0.9998677968978882,243.23138427734375,281.37567138671875,0.9999679327011108,301.48077392578125,279.4807434082031,0.9999736547470093
