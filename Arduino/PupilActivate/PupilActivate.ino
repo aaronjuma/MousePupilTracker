@@ -6,6 +6,7 @@ Arduino Sketch for Activating TTL based on Eye Pupil Size
 unsigned long eyeThreshold = 1.0; //Diameter of the eye (mm) required to activate system
 unsigned long timeThreshold = 5; //How much time (seconds) the eye has to stay past the threshold to activate
 unsigned long cooldown = 10; //How much time before activating system again after activating
+unsigned long targetThreshold = 0.5; //Diameter of eye (mm) required to stop system
 
 //Logic Variables
 bool signalSent = false;
@@ -65,7 +66,7 @@ void loop() {
     unsigned long timeDiff = (millis() - timeSinceSignal)/1000.0;
 
     //Checks if the the cooldown is good and the system is ready to send a signal again
-    if(timeDiff >= cooldown){ //10 seconds
+    if(timeDiff >= cooldown || val < targetThreshold){ 
       deactivate();
       signalSent = false;
       potentialHigh = false;

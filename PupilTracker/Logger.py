@@ -27,7 +27,7 @@ class Logger:
             x = round(time.time() - self.startTime, 1)
             y = self.data
             print(f'{x},{y}', file=open('Data/Logs/'+self.filename,'a')) 
-            time.sleep(0.5)
+            time.sleep(1)
             
     def update(self, data):
         self.data = data

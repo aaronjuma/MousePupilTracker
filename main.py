@@ -12,7 +12,7 @@ from dlclive import DLCLive
 # CONFIG VARIABLES
 LOGGER_STATUS = False
 GRAPH_STATUS = True
-ARDUINO_STATUS = True
+ARDUINO_STATUS = False
 
 def main():
     # Camera Setup
@@ -58,7 +58,7 @@ def main():
         if GRAPH_STATUS: d.value = dia
         if ARDUINO_STATUS: arduino.update(dia)
 
-        #Leave the program, press enter
+        #Leave the program, press escape
         if keyboard.is_pressed('ESC'):
             break                   
 

@@ -2,8 +2,8 @@ import cv2
 
 cap= cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FPS, 30)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)   
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 180)
 cap.set(cv2.CAP_PROP_BRIGHTNESS, 0)
 cap.set(cv2.CAP_PROP_CONTRAST, 49)
 cap.set(cv2.CAP_PROP_HUE, 0)
