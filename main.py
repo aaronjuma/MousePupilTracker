@@ -10,11 +10,6 @@ import multiprocessing
 import yaml
 from dlclive import DLCLive
 
-# CONFIG VARIABLES
-LOGGER_STATUS = False
-GRAPH_STATUS = True
-ARDUINO_STATUS = False
-
 def main():
 
     # Loading Config File
@@ -34,19 +29,19 @@ def main():
     dlc_live.init_inference(cam.getFrame())
 
     # Logging Setup
-    if config["logger"] == "True":
+    if config["logger"]:
         logger = Logger.Logger()
         logger.initialize()
     
     # Graphing Setup
-    if config["grapher"] == "True":
+    if config["grapher"]:
         graph = Graph.Graph()
         d = multiprocessing.Value('d', 0.0)
         p = multiprocessing.Process(target=graph.plot, args=(d,))
         p.start()
         
     # Arduino Setup
-    if config["arduino"] == "True":
+    if config["arduino"]:
         arduino = SerialRecorder.SerialRecorder()
         if arduino.status() == False:
             print("Unable to find arduino")
@@ -60,18 +55,18 @@ def main():
         dlc_live.get_pose(frame)
         dia = dlc_proc.getDiamater()
         
-        if LOGGER_STATUS: logger.update(dia)
-        if GRAPH_STATUS: d.value = dia
-        if ARDUINO_STATUS: arduino.update(dia)
+        if config["logger"]: logger.update(dia)
+        if config["grapher"]: d.value = dia
+        if config["arduino"]: arduino.update(dia)
 
         #Leave the program, press escape
         if keyboard.is_pressed('ESC'):
             break                   
 
     # Ends the program
-    if config["logger"] == "True": p.terminate()
-    if config["grapher"] == "True": logger.stop()
-    if config["arduino"] == "True": arduino.stop()
+    if config["logger"]: p.terminate()
+    if config["grapher"]: logger.stop()
+    if config["arduino"]: arduino.stop()
     cam.close()
     print("Exiting program...")
     return True
