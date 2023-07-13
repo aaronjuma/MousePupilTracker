@@ -7,6 +7,7 @@ import PupilTracker.SerialRecorder as SerialRecorder
 import PupilTracker.Logger as Logger
 import PupilTracker.Graph as Graph
 import multiprocessing
+import yaml
 from dlclive import DLCLive
 
 # CONFIG VARIABLES
@@ -15,6 +16,11 @@ GRAPH_STATUS = True
 ARDUINO_STATUS = False
 
 def main():
+
+    # Loading Config File
+    with open("config.yaml", "r") as f:
+        config = yaml.load(f, Loader=yaml.FullLoader)
+
     # Camera Setup
     cam = Webcam.Webcam()
     if cam.start() == False:
@@ -28,19 +34,19 @@ def main():
     dlc_live.init_inference(cam.getFrame())
 
     # Logging Setup
-    if LOGGER_STATUS:
+    if config["logger"] == "True":
         logger = Logger.Logger()
         logger.initialize()
     
     # Graphing Setup
-    if GRAPH_STATUS:
+    if config["grapher"] == "True":
         graph = Graph.Graph()
         d = multiprocessing.Value('d', 0.0)
         p = multiprocessing.Process(target=graph.plot, args=(d,))
         p.start()
         
     # Arduino Setup
-    if ARDUINO_STATUS:
+    if config["arduino"] == "True":
         arduino = SerialRecorder.SerialRecorder()
         if arduino.status() == False:
             print("Unable to find arduino")
@@ -63,9 +69,9 @@ def main():
             break                   
 
     # Ends the program
-    if GRAPH_STATUS: p.terminate()
-    if LOGGER_STATUS: logger.stop()
-    if ARDUINO_STATUS: arduino.stop()
+    if config["logger"] == "True": p.terminate()
+    if config["grapher"] == "True": logger.stop()
+    if config["arduino"] == "True": arduino.stop()
     cam.close()
     print("Exiting program...")
     return True
