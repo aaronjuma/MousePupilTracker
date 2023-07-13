@@ -24,7 +24,7 @@ def main():
     
     # DeepLabCut Setup
     dlc_proc = PupilProcessor.PupilProcessor()
-    model_path = os.getcwd() + '/DLC_Mice_resnet_50_iteration-2_shuffle-1/'
+    model_path = os.getcwd() + config["model"]
     dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 1, resize = 1)
     dlc_live.init_inference(cam.getFrame())
 
@@ -64,8 +64,8 @@ def main():
             break                   
 
     # Ends the program
-    if config["logger"]: p.terminate()
-    if config["grapher"]: logger.stop()
+    if config["grapher"]: p.terminate()
+    if config["logger"]: logger.stop()
     if config["arduino"]: arduino.stop()
     cam.close()
     print("Exiting program...")

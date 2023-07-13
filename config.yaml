@@ -1,3 +1,4 @@
-arduino: True
-logger: True
+arduino: False
+logger: False
 grapher: True
+model: "/DLC_Mice_resnet_50_iteration-2_shuffle-1/"
