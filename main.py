@@ -25,7 +25,7 @@ def main():
     # DeepLabCut Setup
     dlc_proc = PupilProcessor.PupilProcessor()
     model_path = os.getcwd() + config["model"]
-    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 1, resize = 1)
+    dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 2, resize = 1)
     dlc_live.init_inference(cam.getFrame())
 
     # Logging Setup
