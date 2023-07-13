@@ -22,9 +22,9 @@ class Graph:
         
         plt.xticks(rotation=45, ha='right')
         plt.subplots_adjust(bottom=0.30)
-        plt.title('Size of Circle Over Time')
-        plt.ylabel('Size (mm)')
-        plt.xlabel('Time')
+        plt.title('Size of Pupil Over Time')
+        plt.ylabel('Pupil Diameter (mm)')
+        plt.xlabel('Time (s)')
         
     def plot(self, data):
         self.data = data
