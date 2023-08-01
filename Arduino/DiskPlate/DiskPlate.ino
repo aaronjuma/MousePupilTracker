@@ -6,13 +6,15 @@ Arduino Sketch for Activating TTL based on Disk Velocity
 Encoder disk(2, 3); //Encoder object to read values from plate
 
 //PARAMETERS TO CHANGE
-unsigned long speedThreshold = 3; //Threshold the speed must be below to activate system (revs/sec)
+double speedThreshold = 2; //Threshold the speed must be below to activate system (revs/sec)
 unsigned long timeThreshold = 5; //Amount of time needed for speed to be below threshold to activate system
+unsigned long activationTime = 4;
 unsigned long cooldown = 10; //Amount of time needed to wait before system can activate again
+float frequency = 30;
 
 //Logic Variables
-unsigned long prev = 0;
-unsigned long curr = disk.read();
+long prev = 0;
+long curr = disk.read();
 unsigned long prevT = 0;
 unsigned long currT = millis();
 unsigned long timeSinceSignal = 0;
@@ -36,13 +38,15 @@ void loop() {
   curr = disk.read();
   prevT = currT;
   currT = millis();
-  unsigned long speed = ((curr-prev)/4096.0)*1000.0/(currT-prevT); //revs/sec
+  double diskSpeed = ((curr-prev)/4096.0)*(1000.0/(currT-prevT)); //revs/sec
+
+  Serial.println(diskSpeed);
 
   //Checks if a signal hasn't been sent already
   if (signalSent == false){
 
     //Checks if speed hit threshold
-    if (abs(speed) >= speedThreshold){
+    if (abs(diskSpeed) >= speedThreshold){
 
       //Checks if the it is first time hitting threshold
       if (potentialHigh == false){
@@ -75,8 +79,7 @@ void loop() {
     unsigned long timeDiff = (millis() - timeSinceSignal)/1000.0;
 
     //Checks if the the cooldown has passed and is ready to send a signal again
-    if(timeDiff >= 10){
-      deactivate();
+    if(timeDiff >= cooldown){
       signalSent = false;
       potentialHigh = false;
     }
@@ -84,11 +87,19 @@ void loop() {
       
 }
 
+
+
 //Code for activating system (NEEDS CHANGE FOR TTL)
 void activate() {
-  digitalWrite(13, HIGH);
-}
-
-void deactivate() {
-  digitalWrite(13, LOW);
+  unsigned long startTime = millis();
+  unsigned long timeDiff = 0;
+  double timeDelay = (1000.0/frequency)/2;
+  
+  while (timeDiff < activationTime*1000){
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(timeDelay);                       // wait for a second
+    digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+    delay(timeDelay);                       // wait for a second
+    timeDiff = (millis()-startTime);
+  }
 }

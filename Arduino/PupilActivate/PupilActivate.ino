@@ -6,8 +6,8 @@ Arduino Sketch for Activating TTL based on Eye Pupil Size
 unsigned long eyeThreshold = 1.0; //Diameter of the eye (mm) required to activate system
 unsigned long timeThreshold = 5; //How much time (seconds) the eye has to stay past the threshold to activate
 unsigned long activationTime = 10; //How much time will the system activate for
-unsigned long targetThreshold = 0.4; //Diameter of eye (mm) required to stop system
 unsigned long cooldown = 20;
+float frequency = 30;
 
 //Logic Variables
 bool signalSent = false;
@@ -53,7 +53,6 @@ void loop() {
           activate();
           potentialHigh = false;
           timeSinceSignal = millis();
-          activeSystem = true;
         }
       }
     }
@@ -67,14 +66,8 @@ void loop() {
   //If the signal has already been sent
   else{
     unsigned long timeDiff = (millis() - timeSinceSignal)/1000.0;
-
-    //Checks if the the cooldown is good and the system is ready to send a signal again
-    if((timeDiff >= activationTime || val < targetThreshold) && activeSystem == true){ 
-      deactivate();
-      activeSystem = false;
-    }
-
-    if(timeDiff-activationTime >= cooldown && activeSystem == false) {
+    //Checks if the the cooldown has passed and is ready to send a signal again
+    if(timeDiff >= cooldown){
       signalSent = false;
       potentialHigh = false;
     }
@@ -84,9 +77,15 @@ void loop() {
 
 //Code for activating system (NEEDS CHANGE FOR TTL)
 void activate() {
-  digitalWrite(13, HIGH); //Activates System (NEEDS CHANGE FOR TTL)
-}
-
-void deactivate() {
-  digitalWrite(13, LOW);
+  unsigned long startTime = millis();
+  unsigned long timeDiff = 0;
+  double timeDelay = (1000.0/frequency)/2;
+  
+  while (timeDiff < activationTime*1000){
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(timeDelay);                       // wait for a second
+    digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+    delay(timeDelay);                       // wait for a second
+    timeDiff = (millis()-startTime);
+  }
 }
