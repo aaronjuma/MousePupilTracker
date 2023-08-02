@@ -3,9 +3,10 @@ import os
 import PupilTracker.PupilProcessor as PupilProcessor
 import PupilTracker.Webcam as Webcam
 import keyboard
-import PupilTracker.SerialRecorder as SerialRecorder
+import PupilTracker.Arduino as Arduino
 import PupilTracker.Logger as Logger
 import PupilTracker.Graph as Graph
+import PupilTracker.Controller as Controller
 import multiprocessing
 import yaml
 from dlclive import DLCLive
@@ -42,11 +43,15 @@ def main():
         
     # Arduino Setup
     if config["arduino"]:
-        arduino = SerialRecorder.SerialRecorder()
+        arduino = Arduino.Arduino()
         if arduino.status() == False:
             print("Unable to find arduino")
             return False
         arduino.run()
+
+    # Runs the controller
+    controller = Controller.Controller(arduino)
+    controller.start()
 
     print("Press 'enter' to exit the program...")
     # Runs the program
@@ -57,7 +62,7 @@ def main():
         
         if config["logger"]: logger.update(dia)
         if config["grapher"]: d.value = dia
-        if config["arduino"]: arduino.update(dia)
+        controller.updateValues(dia)
 
         #Leave the program, press escape
         if keyboard.is_pressed('ESC'):
@@ -66,7 +71,7 @@ def main():
     # Ends the program
     if config["grapher"]: p.terminate()
     if config["logger"]: logger.stop()
-    if config["arduino"]: arduino.stop()
+    controller.stop()
     cam.close()
     print("Exiting program...")
     return True

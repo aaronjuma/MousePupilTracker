@@ -1,5 +1,5 @@
 arduino: True
 logger: False
-grapher: True
+grapher: False
 model: "/DLC_Mice_resnet_50_iteration-2_shuffle-1/"
 Mouse: 2
