@@ -37,8 +37,9 @@ def main():
     # Graphing Setup
     if config["grapher"]:
         graph = Graph.Graph()
-        d = multiprocessing.Value('d', 0.0)
-        p = multiprocessing.Process(target=graph.plot, args=(d,))
+        graph_diameter = multiprocessing.Value('d', 0.0)
+        graph_speed = multiprocessing.Value('d', 0.0)
+        p = multiprocessing.Process(target=graph.plot, args=(graph_diameter, graph_speed))
         p.start()
         
     # Arduino Setup
@@ -58,10 +59,11 @@ def main():
         frame = cam.getFrame()
         dlc_live.get_pose(frame)
         dia = dlc_proc.getDiamater()
+        spe = arduino.getValue()
         
         if config["logger"]: logger.update(dia)
-        if config["grapher"]: d.value = dia
-        if config["arduino"]: controller.updateValues(dia, arduino.getValue())
+        if config["grapher"]: graph_diameter.value, graph_speed.value  = dia, spe
+        if config["arduino"]: controller.updateValues(dia, spe)
 
         #Leave the program, press escape
         if keyboard.is_pressed('ESC'):
