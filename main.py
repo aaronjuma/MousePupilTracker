@@ -47,11 +47,10 @@ def main():
         if arduino.status() == False:
             print("Unable to find arduino")
             return False
-        arduino.run()
+        arduino.start()
+        controller = Controller.Controller(arduino)
+        controller.start()
 
-    # Runs the controller
-    controller = Controller.Controller(arduino)
-    controller.start()
 
     print("Press 'enter' to exit the program...")
     # Runs the program
@@ -62,7 +61,7 @@ def main():
         
         if config["logger"]: logger.update(dia)
         if config["grapher"]: d.value = dia
-        controller.updateValues(dia)
+        if config["arduino"]: controller.updateValues(dia, arduino.getValue())
 
         #Leave the program, press escape
         if keyboard.is_pressed('ESC'):
@@ -71,6 +70,7 @@ def main():
     # Ends the program
     if config["grapher"]: p.terminate()
     if config["logger"]: logger.stop()
+    if config["arduino"]: arduino.stop()
     controller.stop()
     cam.close()
     print("Exiting program...")

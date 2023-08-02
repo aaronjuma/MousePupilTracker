@@ -11,6 +11,10 @@ class Arduino:
             if 'Arduino' in p.description:
                 self.board = serial.Serial(port=p.device, baudrate=baudrate, timeout = timeout)
                 break
+        self.t = Thread(target=self.read)
+        self.t.daemon = True
+        self.running = False
+        self.data = 0
         
     def status(self):
         if self.board == None:
@@ -18,11 +22,23 @@ class Arduino:
         else:
             return True
     
+    def start(self):
+        self.running = True
+        self.t.start()
+
+    def stop(self):
+        self.running = False
+
     def read(self):
-        # self.board.write(str(self.data).encode())
-        value = self.board.readline().decode("utf-8")
-        data = float(value) if self.isFloat(value) else 0.0
-        return data
+        self.board.flushInput()
+        while True:
+            if self.running == False:
+                break
+            value = self.board.readline().decode("utf-8")
+            self.data = float(value) if self.isFloat(value) else 0.0
+    
+    def getValue(self):
+        return self.data
     
     def write(self, value):
         self.board.write(str(value).encode())

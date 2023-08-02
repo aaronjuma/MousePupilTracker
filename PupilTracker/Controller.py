@@ -1,5 +1,6 @@
 from threading import Thread
 import time
+import keyboard
 
 class Controller:
     def __init__(self, arduinoBoard):
@@ -18,12 +19,12 @@ class Controller:
 
     def start(self):
         self.running = True
+        self.t.start()
 
     def stop(self):
         self.running = False
 
     def run(self):
-
         # Control Variables
         signalSent = False
         potential = False
@@ -33,13 +34,14 @@ class Controller:
         timeElapsedSpeed = 0
 
         while True:
+            time.sleep(0.01)
             if self.running == False:
                 break
 
             # Condition to turn light ON
             if signalSent == False:
                 # if (self.speed < self.speedThreshold and self.diameter >= self.eyeThreshold):
-                if (self.speed < self.speedThreshold):
+                if (abs(self.speed) < self.speedThreshold):
                     if potential == False:
                         timer = time.time()
                         potential = True
@@ -49,6 +51,7 @@ class Controller:
                         if timeDiff >= self.timeThreshold:
                             signalSent = True
                             self.activate()
+                            print("activated")
                             potential = False
                             timeSinceSignal = time.time()
                 else:
@@ -63,17 +66,21 @@ class Controller:
                 #     signalSent = False
 
                 #Checks for speed condition
-                if self.speed >= self.speedThreshold:
+                if abs(self.speed) >= self.speedThreshold:
                     if speedHigher == False:
                         timeElapsedSpeed = time.time()
                         speedHigher = True
                     else:
                         timeDifference = time.time() - timeElapsedSpeed
-
+                        
                         if timeDifference >= self.timeSpeedActivate:
+                            print("deactive")
                             self.deactivate()
                             potential = False
                             signalSent = False
+                            speedHigher = False
+                else:
+                    speedHigher = False
 
     def activate(self):
         self.arduino.write(1)
@@ -81,6 +88,6 @@ class Controller:
     def deactivate(self):
         self.arduino.write(0)
 
-    def updateValues(self, pupilDiameter):
+    def updateValues(self, pupilDiameter, speed):
         self.diameter = pupilDiameter
-        self.speed = self.arduino.read()
+        self.speed = speed
