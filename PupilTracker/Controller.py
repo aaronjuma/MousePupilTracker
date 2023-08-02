@@ -3,19 +3,20 @@ import time
 import keyboard
 
 class Controller:
-    def __init__(self, arduinoBoard):
+    def __init__(self, arduinoBoard, config):
         self.arduino = arduinoBoard
         self.t = Thread(target=self.run)
         self.t.daemon = True
         self.running = False
 
         # Parameters
+        mouseNumber = str(config["Mouse"])
         self.diameter = 0
         self.speed = 0
-        self.speedThreshold = 1.7
-        self.eyeThreshold = 1.0
-        self.timeThreshold = 3.0
-        self.timeSpeedActivate = 1.0
+        self.speedThreshold = config["SPEED_THRESHOLD"]
+        self.eyeThreshold = config["Mice"]["Mouse"+mouseNumber]["MEAN"]+config["Mice"]["Mouse"+mouseNumber]["STD"]
+        self.timeThreshold = config["TIME_THRESHOLD"]
+        self.timeSpeedActivate = config["SPEED_TIME_ACTIVATION"]
 
     def start(self):
         self.running = True
@@ -40,8 +41,8 @@ class Controller:
 
             # Condition to turn light ON
             if signalSent == False:
-                # if (self.speed < self.speedThreshold and self.diameter >= self.eyeThreshold):
-                if (abs(self.speed) < self.speedThreshold):
+                if (self.speed < self.speedThreshold and self.diameter >= self.eyeThreshold):
+                # if (abs(self.speed) < self.speedThreshold):
                     if potential == False:
                         timer = time.time()
                         potential = True
@@ -59,11 +60,11 @@ class Controller:
             else:
                 timeDiff = time.time() - timeSinceSignal
 
-                #Checks for pupil size condition
-                # if self.diameter < self.eyeThreshold:
-                #     self.deactivate()
-                #     potential = False
-                #     signalSent = False
+                # Checks for pupil size condition
+                if self.diameter < self.eyeThreshold:
+                    self.deactivate()
+                    potential = False
+                    signalSent = False
 
                 #Checks for speed condition
                 if abs(self.speed) >= self.speedThreshold:

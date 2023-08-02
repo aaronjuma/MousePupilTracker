@@ -36,7 +36,7 @@ def main():
     
     # Graphing Setup
     if config["grapher"]:
-        graph = Graph.Graph()
+        graph = Graph.Graph(config)
         graph_diameter = multiprocessing.Value('d', 0.0)
         graph_speed = multiprocessing.Value('d', 0.0)
         p = multiprocessing.Process(target=graph.plot, args=(graph_diameter, graph_speed))
@@ -49,7 +49,7 @@ def main():
             print("Unable to find arduino")
             return False
         arduino.start()
-        controller = Controller.Controller(arduino)
+        controller = Controller.Controller(arduino, config)
         controller.start()
 
 
@@ -61,7 +61,7 @@ def main():
         dia = dlc_proc.getDiamater()
         spe = arduino.getValue()
         
-        if config["logger"]: logger.update(dia)
+        if config["logger"]: logger.update(dia, spe)
         if config["grapher"]: graph_diameter.value, graph_speed.value  = dia, spe
         if config["arduino"]: controller.updateValues(dia, spe)
 

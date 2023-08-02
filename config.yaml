@@ -1,5 +1,15 @@
 arduino: True
-logger: False
+logger: True
 grapher: True
 model: "/DLC_Mice_resnet_50_iteration-2_shuffle-1/"
-Mouse: 2
+Mouse: 1
+Mice:
+  Mouse1: 
+    MEAN: 1.27
+    STD: 0.17
+  Mouse2: 
+    MEAN: 1.41
+    STD: 0.11
+SPEED_THRESHOLD: 1.7
+TIME_THRESHOLD: 3.0
+SPEED_TIME_ACTIVATION: 1.0

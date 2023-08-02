@@ -5,7 +5,8 @@ import time
 class Logger:
     def __init__(self):
         self.filename = ''
-        self.data = 0
+        self.pupil = 0
+        self.speed = 0
         self.t = Thread(target=self.writeData)
         self.t.daemon = True
         self.running = False
@@ -15,7 +16,7 @@ class Logger:
         print("Beginning to log items...")
         self.filename = str(date.today())+'-'+datetime.now().strftime("%H-%M-%S")+'.csv'
         with open('Data/Logs/'+self.filename, 'w') as f:
-            f.write('time,diameter\n')
+            f.write('time,diameter, speed\n')
         self.running = True
         self.startTime = time.time()
         self.t.start()
@@ -25,12 +26,12 @@ class Logger:
             if self.running == False:
                 break
             x = round(time.time() - self.startTime, 1)
-            y = self.data
-            print(f'{x},{y}', file=open('Data/Logs/'+self.filename,'a')) 
+            print(f'{x},{self.pupil},{self.speed}', file=open('Data/Logs/'+self.filename,'a')) 
             time.sleep(1)
             
-    def update(self, data):
-        self.data = data
+    def update(self, pupil, speed):
+        self.pupil = pupil
+        self.speed = speed
             
     def stop(self):
         self.running = False
