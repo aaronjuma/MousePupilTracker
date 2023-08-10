@@ -45,6 +45,5 @@ class Graph:
     def plot(self, diameter, speed):
         self.diameter = diameter
         self.speed = speed
-        print("Beginning Plot...")
         ani = animation.FuncAnimation(self.fig, self.animate, interval=500, cache_frame_data=False)
         plt.show()

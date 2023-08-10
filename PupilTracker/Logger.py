@@ -13,7 +13,6 @@ class Logger:
         self.startTime = 0
         
     def initialize(self):
-        print("Beginning to log items...")
         self.filename = str(date.today())+'-'+datetime.now().strftime("%H-%M-%S")+'.csv'
         with open('Data/Logs/'+self.filename, 'w') as f:
             f.write('time,diameter, speed\n')

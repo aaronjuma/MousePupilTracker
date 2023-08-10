@@ -10,7 +10,7 @@ class Webcam:
         self.cam = cv2.VideoCapture(0)
         self.cam.set(cv2.CAP_PROP_FPS, 30)
         self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-        self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 180)
+        self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
         self.cam.set(cv2.CAP_PROP_BRIGHTNESS, 0)
         self.cam.set(cv2.CAP_PROP_CONTRAST, 64)
         self.cam.set(cv2.CAP_PROP_HUE, 0)

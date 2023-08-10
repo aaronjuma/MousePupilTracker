@@ -9,17 +9,15 @@ class PupilProcessor(Processor):
 
     def process(self, pose, **kwargs):
         
-        # 0 centre
-        # 1 top
-        # 2 bottom
-        # 3 left
-        # 4 right
-        # 5 topleft
-        # 6 topright
-        # 7 bottomleft
-        # 8 bottomright
-        # 9 ref1
-        # 10 ref2
+        # 0. centre
+        # 1. top
+        # 2. bottom
+        # 3. left
+        # 4. right
+        # 5. topleft
+        # 6. topright
+        # 7. bottomleft
+        # 8. bottomright
 
         # IF CENTER IS NOT FOUND
         if pose[0, 2] < 0.5:
@@ -41,11 +39,8 @@ class PupilProcessor(Processor):
         
         if activePos == 0:
             return pose
-        
-        referencePixel = math.sqrt((pose[9, 0] - pose[10,0])**2 + (pose[9, 1] - pose[10, 1])**2)
-        ratio = 1.8/referencePixel
 
-        self.diameter = round((radiusSum/activePos)*2*ratio, 2)
+        self.diameter = round((radiusSum/activePos)*2, 2)
         
         return pose
 

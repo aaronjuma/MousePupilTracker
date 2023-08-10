@@ -8,8 +8,6 @@ all_joints:
 - - 6
 - - 7
 - - 8
-- - 9
-- - 10
 all_joints_names:
 - centre
 - top
@@ -20,8 +18,6 @@ all_joints_names:
 - topright
 - bottomleft
 - bottomright
-- ref1
-- ref2
 alpha_r: 0.02
 apply_prob: 0.5
 batch_size:
@@ -45,7 +41,7 @@ convolution:
 crop_pad: 0
 cropratio: 0.4
 dataset: 
-  training-datasets/iteration-1/UnaugmentedDataSet_MiceJul6/Mice_Aaron95shuffle1.mat
+  training-datasets/iteration-1/UnaugmentedDataSet_MiceAug3/Mice_Aaron95shuffle1.mat
 dataset_type: imgaug
 decay_steps: 30000
 deterministic: false
@@ -53,7 +49,7 @@ display_iters: 1000
 fg_fraction: 0.25
 global_scale: 0.8
 init_weights: /content/drive/My 
-  Drive/Mice-Aaron-2023-07-06/dlc-models/iteration-1/MiceJul6-trainset95shuffle1/train/snapshot-100000
+  Drive/Mice-Aaron-2023-08-03/dlc-models/iteration-1/MiceAug3-trainset95shuffle1/train/snapshot-200000
 intermediate_supervision: false
 intermediate_supervision_layer: 12
 location_refinement: true
@@ -68,7 +64,7 @@ mean_pixel:
 - 116.779
 - 103.939
 metadataset: 
-  training-datasets/iteration-1/UnaugmentedDataSet_MiceJul6/Documentation_data-Mice_95shuffle1.pickle
+  training-datasets/iteration-1/UnaugmentedDataSet_MiceAug3/Documentation_data-Mice_95shuffle1.pickle
 min_input_size: 64
 mirror: false
 multi_stage: false
@@ -82,14 +78,14 @@ multi_step:
 - - 0.001
   - 1030000
 net_type: resnet_50
-num_joints: 11
+num_joints: 9
 num_outputs: 1
 optimizer: sgd
 pairwise_huber_loss: false
 pairwise_predict: false
 partaffinityfield_predict: false
 pos_dist_thresh: 17
-project_path: /content/drive/My Drive/Mice-Aaron-2023-07-06
+project_path: /content/drive/My Drive/Mice-Aaron-2023-08-03
 regularize: false
 rotation: 25
 rotratio: 0.4
@@ -99,7 +95,7 @@ scale_jitter_up: 1.25
 scoremap_dir: test
 shuffle: true
 snapshot_prefix: /content/drive/My 
-  Drive/Mice-Aaron-2023-07-06/dlc-models/iteration-1/MiceJul6-trainset95shuffle1/train/snapshot
+  Drive/Mice-Aaron-2023-08-03/dlc-models/iteration-1/MiceAug3-trainset95shuffle1/train/snapshot
 stride: 8.0
 weigh_negatives: false
 weigh_only_present_joints: false
