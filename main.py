@@ -32,7 +32,7 @@ def main():
     # Logging Setup
     if config["logger"]:
         logger = Logger.Logger()
-        logger.initialize()
+        logger.initialize("TRIAL")
     
     # Graphing Setup
     if config["grapher"]:
@@ -52,7 +52,6 @@ def main():
         controller = Controller.Controller(arduino, config)
         controller.start()
 
-
     print("Press 'enter' to exit the program...")
     # Runs the program
     while(True):
@@ -60,8 +59,9 @@ def main():
         dlc_live.get_pose(frame)
         dia = dlc_proc.getDiamater()
         spe = arduino.getValue()
-        
-        if config["logger"]: logger.update(dia, spe)
+
+
+        if config["logger"]: logger.update(pupil=dia, speed=arduino.getBin(), sysStatus=controller.getStatus())
         if config["grapher"]: graph_diameter.value, graph_speed.value  = dia, spe
         if config["arduino"]: controller.updateValues(dia, spe)
 

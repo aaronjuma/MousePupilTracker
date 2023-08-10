@@ -15,6 +15,7 @@ class Arduino:
         self.t.daemon = True
         self.running = False
         self.data = 0
+        self.bin = []
         
     def status(self):
         if self.board == None:
@@ -31,11 +32,18 @@ class Arduino:
 
     def read(self):
         self.board.flushInput()
+        prevTime = time.time()
         while True:
             if self.running == False:
                 break
             value = self.board.readline().decode("utf-8")
             self.data = float(value) if self.isFloat(value) else 0.0
+            
+            
+            currTime = time.time()
+            if currTime - prevTime > 0.01:
+                self.bin.append(self.data)
+                self.bin = self.bin[-100:]
     
     def getValue(self):
         return self.data
@@ -49,4 +57,7 @@ class Arduino:
             return True
         except ValueError:
             return False
+        
+    def getBin(self):
+        return self.bin
 

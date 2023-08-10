@@ -8,6 +8,7 @@ class Controller:
         self.t = Thread(target=self.run)
         self.t.daemon = True
         self.running = False
+        self.signalSent = False
 
         # Parameters
         mouseNumber = str(config["Mouse"])
@@ -27,7 +28,7 @@ class Controller:
 
     def run(self):
         # Control Variables
-        signalSent = False
+        self.signalSent = False
         potential = False
         timer = 0
         timeSinceSignal = 0
@@ -40,7 +41,7 @@ class Controller:
                 break
 
             # Condition to turn light ON
-            if signalSent == False:
+            if self.signalSent == False:
                 if (self.speed < self.speedThreshold and self.diameter >= self.eyeThreshold):
                 # if (abs(self.speed) < self.speedThreshold):
                     if potential == False:
@@ -50,7 +51,7 @@ class Controller:
                         timeDiff = time.time() - timer
 
                         if timeDiff >= self.timeThreshold:
-                            signalSent = True
+                            self.signalSent = True
                             self.activate()
                             print("activated")
                             potential = False
@@ -64,7 +65,7 @@ class Controller:
                 if self.diameter < self.eyeThreshold:
                     self.deactivate()
                     potential = False
-                    signalSent = False
+                    self.signalSent = False
 
                 #Checks for speed condition
                 if abs(self.speed) >= self.speedThreshold:
@@ -78,7 +79,7 @@ class Controller:
                             print("deactive")
                             self.deactivate()
                             potential = False
-                            signalSent = False
+                            self.signalSent = False
                             speedHigher = False
                 else:
                     speedHigher = False
@@ -92,3 +93,6 @@ class Controller:
     def updateValues(self, pupilDiameter, speed):
         self.diameter = pupilDiameter
         self.speed = speed
+    
+    def getStatus(self):
+        return 0 if self.signalSent == False else 1
