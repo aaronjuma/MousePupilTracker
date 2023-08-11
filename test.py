@@ -30,10 +30,6 @@ def main():
     model_path = os.getcwd() + config["model"]
     dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 2, resize = 1)
     dlc_live.init_inference(cam.getFrame())
-
-    # Logging Setup
-    if config["logger"]:
-        logger = Logger.Logger()
     
     # Graphing Setup
     if config["grapher"]:
@@ -50,16 +46,6 @@ def main():
             print("Unable to find arduino")
             return False
         arduino.start()
-        controller = Controller.Controller(arduino, config)
-
-    '''
-    Mode 0 = Sample Init
-    Mode 1 = Sample
-    Mode 2 = Trial Init
-    Mode 3 = Trial
-    '''
-    mode = 0
-    startTime = time.time()
 
     print("Press 'escape' to exit the program...")
     # Runs the program
@@ -74,36 +60,12 @@ def main():
         dlc_live.get_pose(frame)
         dia = dlc_proc.getDiamater()
         spe = arduino.getValue()
-
-        if mode == 0:
-            print("RECORDING PERIOD")
-            logger.initialize("SAMPLE")
-            mode = 1
-        elif mode == 1:
-            if (time.time() - startTime) > 300:
-                logger.stop()
-                mode = 2
-            else:
-                logger.update(pupil = dia)
-        elif mode == 2:
-            print("TRIAL PERIOD")
-            logger.initialize("TRIAL")
-            # Controller updates threshold
-            calc = TC.ThresholdCalculator(logger.getDirec)
-            calc.run()
-            controller.run(calc.getMean(), calc.getSD())
-            mode = 3
-        elif mode == 3:
-            logger.update(pupil=dia, speed=arduino.getBin(), sysStatus=controller.getStatus())
-            controller.updateValues(dia, spe)
         
         graph_diameter.value, graph_speed.value  = dia, spe      
 
     # Ends the program
     if config["grapher"]: p.terminate()
-    if config["logger"]: logger.stop()
     if config["arduino"]: arduino.stop()
-    controller.stop()
     cam.close()
     print("Exiting program...")
     return True

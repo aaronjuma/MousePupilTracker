@@ -59,3 +59,6 @@ class Logger:
     def turnBinToString(self, bin):
         text = ''.join([str(x)+',' for x in bin])
         return text[:-1]
+    
+    def getDirec(self):
+        return self.direc

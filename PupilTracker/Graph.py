@@ -14,7 +14,7 @@ class Graph:
         self.diameter = 0
         self.speed = 0
         self.config = config
-        self.thresh = config["Mice"]["Mouse"+str(config["Mouse"])]["MEAN"]+config["Mice"]["Mouse"+str(config["Mouse"])]["STD"]
+        # self.thresh = config["Mice"]["Mouse"+str(config["Mouse"])]["MEAN"]+config["Mice"]["Mouse"+str(config["Mouse"])]["STD"]
         self.start_time = time.time()
         
     def animate(self, i):
@@ -31,7 +31,7 @@ class Graph:
         self.ax.set_ylabel('Eye Diameter (mm)', color='tab:red')
         self.ax.plot(self.xs, self.ys_diameter, color = 'tab:red')
         self.ax.tick_params(axis='y', labelcolor='tab:red')
-        self.ax.axhline(y = self.thresh, color = 'g', linestyle = '-')
+        # self.ax.axhline(y = self.thresh, color = 'g', linestyle = '-')
 
         self.ax2.clear()
         self.ax2.set_ylabel('Speed (cm/s)', color='tab:blue')

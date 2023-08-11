@@ -11,17 +11,20 @@ class Controller:
         self.signalSent = False
 
         # Parameters
-        mouseNumber = str(config["Mouse"])
         self.diameter = 0
         self.speed = 0
         self.speedThreshold = config["SPEED_THRESHOLD"]
-        self.eyeThreshold = config["Mice"]["Mouse"+mouseNumber]["MEAN"]+config["Mice"]["Mouse"+mouseNumber]["STD"]
+        self.eyeThreshold = 0.33
         self.timeThreshold = config["TIME_THRESHOLD"]
         self.timeSpeedActivate = config["SPEED_TIME_ACTIVATION"]
+        self.mean = 0
+        self.std = 1
 
-    def start(self):
+    def start(self, mean, std):
         self.running = True
         self.t.start()
+        self.mean = mean
+        self.std = std
 
     def stop(self):
         self.running = False
@@ -40,9 +43,10 @@ class Controller:
             if self.running == False:
                 break
 
+            diam = (self.diameter-self.mean)/self.std
             # Condition to turn light ON
             if self.signalSent == False:
-                if (self.speed < self.speedThreshold and self.diameter >= self.eyeThreshold):
+                if (self.speed < self.speedThreshold and diam >= self.eyeThreshold):
                 # if (abs(self.speed) < self.speedThreshold):
                     if potential == False:
                         timer = time.time()
@@ -62,7 +66,7 @@ class Controller:
                 timeDiff = time.time() - timeSinceSignal
 
                 # Checks for pupil size condition
-                if self.diameter < self.eyeThreshold:
+                if diam < self.eyeThreshold:
                     self.deactivate()
                     potential = False
                     self.signalSent = False
