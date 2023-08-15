@@ -8,13 +8,13 @@ class ThresholdCalculator:
 
     def run(self):
         arr=[] #creating the array
-        arr = np.loadtxt(self.direc+"Trial.csv",
+        arr = np.loadtxt(self.direc+"Sample.csv",
                         delimiter=",", skiprows = 1, dtype=float)
         x=arr[:,1]
         self.mean = np.mean(x)
         self.std = np.std(x)
         with open(self.direc+"ThresholdParams.txt", 'w') as f:
-            f.write(f'MEAN: {self.mean}')
+            f.write(f'MEAN: {self.mean}\n')
             f.write(f'STD: {self.std}')
 
     def getMean(self):

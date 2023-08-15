@@ -22,9 +22,9 @@ class Controller:
 
     def start(self, mean, std):
         self.running = True
-        self.t.start()
         self.mean = mean
         self.std = std
+        self.t.start()
 
     def stop(self):
         self.running = False
@@ -68,6 +68,7 @@ class Controller:
                 # Checks for pupil size condition
                 if diam < self.eyeThreshold:
                     self.deactivate()
+                    print("deactive")
                     potential = False
                     self.signalSent = False
 

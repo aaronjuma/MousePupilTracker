@@ -40,12 +40,12 @@ def main():
         p.start()
         
     # Arduino Setup
-    if config["arduino"]:
-        arduino = Arduino.Arduino()
-        if arduino.status() == False:
-            print("Unable to find arduino")
-            return False
-        arduino.start()
+    # if config["arduino"]:
+    #     arduino = Arduino.Arduino()
+    #     if arduino.status() == False:
+    #         print("Unable to find arduino")
+    #         return False
+    #     arduino.start()
 
     print("Press 'escape' to exit the program...")
     # Runs the program
@@ -59,13 +59,14 @@ def main():
         frame = cam.getFrame()
         dlc_live.get_pose(frame)
         dia = dlc_proc.getDiamater()
-        spe = arduino.getValue()
+        # spe = arduino.getValue()
         
-        graph_diameter.value, graph_speed.value  = dia, spe      
+        # graph_diameter.value, graph_speed.value  = dia, spe      
+        graph_diameter.value = dia
 
     # Ends the program
     if config["grapher"]: p.terminate()
-    if config["arduino"]: arduino.stop()
+    # if config["arduino"]: arduino.stop()
     cam.close()
     print("Exiting program...")
     return True

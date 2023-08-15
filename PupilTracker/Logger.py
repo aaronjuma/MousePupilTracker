@@ -16,19 +16,9 @@ class Logger:
         self.running = False
         self.startTime = 0
         
-    def initialize(self, TYPE):
+    def initialize(self):
         if not os.path.exists(self.direc):
             os.makedirs(self.direc)
-
-        self.type = TYPE
-        if TYPE == "SAMPLE":
-            self.filename = "Sample.csv"
-            with open(self.direc+self.filename, 'w') as f:
-                f.write('time,diameter\n')
-        if TYPE == "TRIAL": 
-            self.filename = "Trial.csv"
-            with open(self.direc+self.filename, 'w') as f:
-                f.write('time,diameter,system status\n')
         
         self.running = True
         self.startTime = time.time()
@@ -62,3 +52,16 @@ class Logger:
     
     def getDirec(self):
         return self.direc
+    
+    def setType(self, TYPE):
+        self.type = TYPE
+        if TYPE == "SAMPLE":
+            self.filename = "Sample.csv"
+            with open(self.direc+self.filename, 'w') as f:
+                f.write('time,diameter\n')
+        if TYPE == "TRIAL": 
+            self.filename = "Trial.csv"
+            with open(self.direc+self.filename, 'w') as f:
+                f.write('time,diameter,system status\n')
+            with open(self.direc+'Speed.csv', 'w') as f:
+                f.write('speedbin\n')

@@ -36,7 +36,12 @@ class Arduino:
         while True:
             if self.running == False:
                 break
-            value = self.board.readline().decode("utf-8")
+
+            try:
+                value = self.board.readline().decode("utf-8")
+            except (UnicodeDecodeError, AttributeError):
+                value = 0
+                pass
             self.data = float(value) if self.isFloat(value) else 0.0
             
             

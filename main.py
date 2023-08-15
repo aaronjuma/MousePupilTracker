@@ -40,6 +40,7 @@ def main():
         graph = Graph.Graph(config)
         graph_diameter = multiprocessing.Value('d', 0.0)
         graph_speed = multiprocessing.Value('d', 0.0)
+        graph_thresh = multiprocessing.Value('d', 0.0)
         p = multiprocessing.Process(target=graph.plot, args=(graph_diameter, graph_speed))
         p.start()
         
@@ -77,21 +78,23 @@ def main():
 
         if mode == 0:
             print("RECORDING PERIOD")
-            logger.initialize("SAMPLE")
+            logger.initialize()
+            logger.setType("SAMPLE")
             mode = 1
         elif mode == 1:
             if (time.time() - startTime) > 300:
-                logger.stop()
                 mode = 2
             else:
                 logger.update(pupil = dia)
         elif mode == 2:
             print("TRIAL PERIOD")
-            logger.initialize("TRIAL")
+            logger.setType("TRIAL")
             # Controller updates threshold
-            calc = TC.ThresholdCalculator(logger.getDirec)
+            calc = TC.ThresholdCalculator(logger.getDirec())
             calc.run()
-            controller.run(calc.getMean(), calc.getSD())
+            controller.start(calc.getMean(), calc.getSTD())
+            print(calc.getMean())
+            print(calc.getSTD())
             mode = 3
         elif mode == 3:
             logger.update(pupil=dia, speed=arduino.getBin(), sysStatus=controller.getStatus())
