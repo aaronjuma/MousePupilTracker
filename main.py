@@ -27,31 +27,28 @@ def main():
     
     # DeepLabCut Setup
     dlc_proc = PupilProcessor.PupilProcessor()
-    model_path = os.getcwd() + config["model"]
+    model_path = os.getcwd() + "/DLC_Mice_resnet_50_iteration-1_shuffle-1/"
     dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 2, resize = 1)
     dlc_live.init_inference(cam.getFrame())
 
     # Logging Setup
-    if config["logger"]:
-        logger = Logger.Logger()
+    logger = Logger.Logger()
     
     # Graphing Setup
-    if config["grapher"]:
-        graph = Graph.Graph(config)
-        graph_diameter = multiprocessing.Value('d', 0.0)
-        graph_speed = multiprocessing.Value('d', 0.0)
-        graph_thresh = multiprocessing.Value('d', 0.0)
-        p = multiprocessing.Process(target=graph.plot, args=(graph_diameter, graph_speed))
-        p.start()
+    graph = Graph.Graph(config)
+    graph_diameter = multiprocessing.Value('d', 0.0)
+    graph_speed = multiprocessing.Value('d', 0.0)
+    graph_thresh = multiprocessing.Value('d', 0.0)
+    p = multiprocessing.Process(target=graph.plot, args=(graph_diameter, graph_speed))
+    p.start()
         
     # Arduino Setup
-    if config["arduino"]:
-        arduino = Arduino.Arduino()
-        if arduino.status() == False:
-            print("Unable to find arduino")
-            return False
-        arduino.start()
-        controller = Controller.Controller(arduino, config)
+    arduino = Arduino.Arduino()
+    if arduino.status() == False:
+        print("Unable to find arduino")
+        return False
+    arduino.start()
+    controller = Controller.Controller(arduino, config)
 
     '''
     Mode 0 = Sample Init
@@ -82,7 +79,7 @@ def main():
             logger.setType("SAMPLE")
             mode = 1
         elif mode == 1:
-            if (time.time() - startTime) > 300:
+            if (time.time() - startTime) > float(config["SAMPLE_DURATION"]):
                 mode = 2
             else:
                 logger.update(pupil = dia)
@@ -103,9 +100,9 @@ def main():
         graph_diameter.value, graph_speed.value  = dia, spe      
 
     # Ends the program
-    if config["grapher"]: p.terminate()
-    if config["logger"]: logger.stop()
-    if config["arduino"]: arduino.stop()
+    p.terminate()
+    logger.stop()
+    arduino.stop()
     controller.stop()
     cam.close()
     print("Exiting program...")

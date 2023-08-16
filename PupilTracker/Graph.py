@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 
 class Graph:
     def __init__(self, config):
-        plt.ion()
+        # plt.ion()
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(1, 1, 1)
         self.ax2 = self.ax.twinx()

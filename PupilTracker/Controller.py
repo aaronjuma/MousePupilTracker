@@ -14,9 +14,9 @@ class Controller:
         self.diameter = 0
         self.speed = 0
         self.speedThreshold = config["SPEED_THRESHOLD"]
-        self.eyeThreshold = 0.33
-        self.timeThreshold = config["TIME_THRESHOLD"]
-        self.timeSpeedActivate = config["SPEED_TIME_ACTIVATION"]
+        self.eyeThreshold = config["EYE_THRESHOLD"]
+        self.activationTime = config["ACTIVATION_TIME"]
+        self.deactivationTime = config["DEACTIVATION_TIME"]
         self.mean = 0
         self.std = 1
 
@@ -54,7 +54,7 @@ class Controller:
                     else:
                         timeDiff = time.time() - timer
 
-                        if timeDiff >= self.timeThreshold:
+                        if timeDiff >= self.activationTime:
                             self.signalSent = True
                             self.activate()
                             print("activated")
@@ -80,7 +80,7 @@ class Controller:
                     else:
                         timeDifference = time.time() - timeElapsedSpeed
                         
-                        if timeDifference >= self.timeSpeedActivate:
+                        if timeDifference >= self.deactivationTime:
                             print("deactive")
                             self.deactivate()
                             potential = False
