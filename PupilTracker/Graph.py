@@ -33,8 +33,8 @@ class Graph:
         self.ax.tick_params(axis='y', labelcolor='tab:red')
         # self.ax.axhline(y = self.thresh, color = 'g', linestyle = '-')
 
-        self.ax2.clear()
-        self.ax2.set_ylabel('Speed (cm/s)', color='tab:blue')
+        # self.ax2.clear()
+        self.ax2.set_ylabel('Speed (pixels)', color='tab:blue')
         self.ax2.plot(self.xs, self.ys_speed, color = 'tab:blue')
         self.ax2.tick_params(axis='y', labelcolor='tab:blue')
         
