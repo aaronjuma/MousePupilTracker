@@ -28,19 +28,20 @@ class Graph:
 
         self.ax.clear()
         self.ax.set_xlabel('Time (s)')
-        self.ax.set_ylabel('Eye Diameter (mm)', color='tab:red')
+        self.ax.set_ylabel('Eye Diameter (mm)', color='tab:red', labelpad=15)
         self.ax.plot(self.xs, self.ys_diameter, color = 'tab:red')
         self.ax.tick_params(axis='y', labelcolor='tab:red')
         # self.ax.axhline(y = self.thresh, color = 'g', linestyle = '-')
 
         # self.ax2.clear()
-        self.ax2.set_ylabel('Speed (pixels)', color='tab:blue')
+        self.ax2.set_ylabel('Speed (pixels)', color='tab:blue', labelpad=15)
         self.ax2.plot(self.xs, self.ys_speed, color = 'tab:blue')
         self.ax2.tick_params(axis='y', labelcolor='tab:blue')
         
         plt.xticks(rotation=45, ha='right')
         plt.subplots_adjust(bottom=0.30)
         plt.title('Size of Pupil Over Time')
+        plt.tight_layout()
         
     def plot(self, diameter, speed):
         self.diameter = diameter
