@@ -1,5 +1,5 @@
 import GUI as GUI
-import MouseTracker
+import MouseTracker as MouseTracker
 import multiprocessing
 
 if __name__ == '__main__':

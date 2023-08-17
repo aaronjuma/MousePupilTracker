@@ -1,4 +1,3 @@
-import sys
 import os
 import time
 import PupilTracker.PupilProcessor as PupilProcessor
@@ -16,7 +15,7 @@ from dlclive import DLCLive
 def main():
 
     # Loading Config File
-    with open("config.yaml", "r") as f:
+    with open("Data/config.yaml", "r") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
     # Camera Setup
@@ -25,9 +24,17 @@ def main():
         print("Camera Error")
         return False
     
+    # Arduino Setup
+    arduino = Arduino.Arduino()
+    if arduino.status() == False:
+        print("Unable to find arduino")
+        return False
+    arduino.start()
+    controller = Controller.Controller(arduino, config)
+    
     # DeepLabCut Setup
     dlc_proc = PupilProcessor.PupilProcessor()
-    model_path = os.getcwd() + "/DLC_Mice_resnet_50_iteration-1_shuffle-1/"
+    model_path = os.getcwd() + "/PupilTracker/DLC_Mice_resnet_50_iteration-1_shuffle-1/"
     dlc_live = DLCLive(model_path, processor = dlc_proc, display = True, display_radius = 2, resize = 1)
     dlc_live.init_inference(cam.getFrame())
 
@@ -41,14 +48,6 @@ def main():
     graph_thresh = multiprocessing.Value('d', 0.0)
     p = multiprocessing.Process(target=graph.plot, args=(graph_diameter, graph_speed))
     p.start()
-        
-    # Arduino Setup
-    arduino = Arduino.Arduino()
-    if arduino.status() == False:
-        print("Unable to find arduino")
-        return False
-    arduino.start()
-    controller = Controller.Controller(arduino, config)
 
     '''
     Mode 0 = Sample Init
@@ -107,9 +106,3 @@ def main():
     cam.close()
     print("Exiting program...")
     return True
-
-if __name__ == '__main__':
-    if main():
-        sys.exit(0)
-    else:
-        sys.exit(1)

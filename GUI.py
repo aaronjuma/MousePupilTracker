@@ -1,6 +1,5 @@
 import tkinter
 import yaml
-import sys
 
 class GUI:
     def __init__(self):
@@ -11,7 +10,7 @@ class GUI:
         self.frame = tkinter.Frame(self.window)
         self.frame.pack()
 
-        with open("config.yaml", "r") as f:
+        with open("Data/config.yaml", "r") as f:
             self.config = yaml.load(f, Loader=yaml.FullLoader)
 
 
@@ -109,7 +108,7 @@ class GUI:
         self.config["SAMPLE_DURATION"] = float(configDict["SAMPLE_DURATION"])
         self.config["TRIAL_DURATION"] = float(configDict["TRIAL_DURATION"])
 
-        with open("config.yaml", 'w') as file:
+        with open("Data/config.yaml", 'w') as file:
             yaml.dump(self.config, file)  
         
         self.status = False
