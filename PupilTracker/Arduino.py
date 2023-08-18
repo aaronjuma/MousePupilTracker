@@ -64,5 +64,5 @@ class Arduino:
             return False
         
     def getBin(self):
-        return self.bin
+        return self.bin[-100:]
 

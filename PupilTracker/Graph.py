@@ -13,6 +13,7 @@ class Graph:
         self.ys_diameter = []
         self.diameter = 0
         self.speed = 0
+        self.thresh = -9999
         self.config = config
         # self.thresh = config["Mice"]["Mouse"+str(config["Mouse"])]["MEAN"]+config["Mice"]["Mouse"+str(config["Mouse"])]["STD"]
         self.start_time = time.time()
@@ -31,9 +32,11 @@ class Graph:
         self.ax.set_ylabel('Eye Diameter (mm)', color='tab:red', labelpad=15)
         self.ax.plot(self.xs, self.ys_diameter, color = 'tab:red')
         self.ax.tick_params(axis='y', labelcolor='tab:red')
-        # self.ax.axhline(y = self.thresh, color = 'g', linestyle = '-')
 
-        # self.ax2.clear()
+        if self.thresh.value != -9999:
+            self.ax.axhline(y = self.thresh.value, color = 'g', linestyle = '-')
+
+        self.ax2.clear()
         self.ax2.set_ylabel('Speed (pixels)', color='tab:blue', labelpad=15)
         self.ax2.plot(self.xs, self.ys_speed, color = 'tab:blue')
         self.ax2.tick_params(axis='y', labelcolor='tab:blue')
@@ -43,8 +46,9 @@ class Graph:
         plt.title('Size of Pupil Over Time')
         plt.tight_layout()
         
-    def plot(self, diameter, speed):
+    def plot(self, diameter, speed, thresh):
         self.diameter = diameter
         self.speed = speed
+        self.thresh = thresh
         ani = animation.FuncAnimation(self.fig, self.animate, interval=500, cache_frame_data=False)
         plt.show()

@@ -45,8 +45,8 @@ def main():
     graph = Graph.Graph(config)
     graph_diameter = multiprocessing.Value('d', 0.0)
     graph_speed = multiprocessing.Value('d', 0.0)
-    graph_thresh = multiprocessing.Value('d', 0.0)
-    p = multiprocessing.Process(target=graph.plot, args=(graph_diameter, graph_speed))
+    graph_thresh = multiprocessing.Value('d', -9999)
+    p = multiprocessing.Process(target=graph.plot, args=(graph_diameter, graph_speed, graph_thresh))
     p.start()
 
     '''
@@ -91,6 +91,7 @@ def main():
             controller.start(calc.getMean(), calc.getSTD())
             print(calc.getMean())
             print(calc.getSTD())
+            graph_thresh.value = float(config["EYE_THRESHOLD"])*calc.getSTD() + calc.getMean() 
             mode = 3
         elif mode == 3:
             logger.update(pupil=dia, speed=arduino.getBin(), sysStatus=controller.getStatus())
