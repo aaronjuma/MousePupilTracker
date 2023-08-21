@@ -1,4 +1,4 @@
 Data/Logs/
 __pycache__
 .vscode
-.pyc
+*.pyc
