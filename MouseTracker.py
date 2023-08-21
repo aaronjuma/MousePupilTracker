@@ -22,12 +22,14 @@ def main():
     cam = Webcam.Webcam()
     if cam.start() == False:
         print("Camera Error")
+        os.system('pause')
         return False
     
     # Sets up the arduino and ends program if no arduino is found
     arduino = Arduino.Arduino()
     if arduino.status() == False:
         print("Unable to find arduino")
+        os.system('pause')
         return False
     arduino.start()
     controller = Controller.Controller(arduino, config)
