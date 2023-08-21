@@ -101,12 +101,18 @@ def main():
             print(calc.getMean())
             print(calc.getSTD())
             graph_thresh.value = float(config["EYE_THRESHOLD"])*calc.getSTD() + calc.getMean() # Updates graph about threshold
+            startTime = time.time()
             mode = 3
 
         # The loop code for the Trial Period
         elif mode == 3:
-            logger.update(pupil=dia, speed=arduino.getBin(), sysStatus=controller.getStatus())
-            controller.updateValues(dia, spe)
+            if (time.time() - startTime) > float(config["TRIAL_DURATION"]):
+                print("FINISHED")
+                os.system('pause')
+                break
+            else:
+                logger.update(pupil=dia, speed=arduino.getBin(), sysStatus=controller.getStatus())
+                controller.updateValues(dia, spe)
         
         # Updates the graph about the diameter and speed
         graph_diameter.value, graph_speed.value  = dia, spe      

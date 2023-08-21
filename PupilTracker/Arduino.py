@@ -81,7 +81,8 @@ class Arduino:
         self.board.flushInput()
 
         # Time Variable
-        prevTime = time.time()
+        prevTime = 0
+        currTime = time.time()
 
 
         while True:

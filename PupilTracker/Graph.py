@@ -70,6 +70,8 @@ class Graph:
         self.ax2.set_ylabel('Speed (pixels)', color='tab:blue', labelpad=15)
         self.ax2.plot(self.xs, self.ys_speed, color = 'tab:blue')
         self.ax2.tick_params(axis='y', labelcolor='tab:blue')
+        self.ax2.yaxis.set_label_position("right")
+        self.ax2.yaxis.tick_right()
         
         # Finishing touch ups on the graph
         plt.xticks(rotation=45, ha='right')
@@ -91,5 +93,5 @@ class Graph:
         self.thresh = thresh
 
         # Plots the graph in real time
-        ani = animation.FuncAnimation(self.fig, self.animate, interval=500, cache_frame_data=False)
+        ani = animation.FuncAnimation(self.fig, self.animate, interval=250, cache_frame_data=False)
         plt.show()
