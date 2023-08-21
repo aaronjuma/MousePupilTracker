@@ -108,7 +108,6 @@ def main():
         elif mode == 3:
             if (time.time() - startTime) > float(config["TRIAL_DURATION"]):
                 print("FINISHED")
-                os.system('pause')
                 break
             else:
                 logger.update(pupil=dia, speed=arduino.getBin(), sysStatus=controller.getStatus())
@@ -123,5 +122,6 @@ def main():
     arduino.stop()
     controller.stop()
     cam.close()
+    os.system('pause')
     print("Exiting program...")
     return True

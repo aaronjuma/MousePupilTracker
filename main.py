@@ -1,4 +1,4 @@
-import GUI as GUI
+import PupilTracker.GUI as GUI
 import MouseTracker as MouseTracker
 import multiprocessing
 
