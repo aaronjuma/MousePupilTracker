@@ -1,5 +1,10 @@
 # MousePupilTracker
 
+# Introduction
+This program is an automated script that controls a real-time closed loop system that activates an optogenetic system based on a mouse's pupil size and speed. It is able to track the mouse's pupil size using a convolutional neural network (CNN) through transfer learning of a ResNet-50 model using DeepLabCut. The model was trained with pictures of different mouse pupils. Using the trained model, live processing of the mouse's pupil size can be done using a Webcam. The system also utilizes an Arduino which sends speed data from a running disk to the script. The Arduino is also responsible for sending a TTL signal to a Doric LED Driver, which will activate an optogenetic laser. The pupil size and speed of the mouse is graphed live onto a GUI, and it is also logged in a file. The program is split into two sections: A sampling period and a trial period. The sampling period is the first 5 minutes of the program. It will only record the pupil size of the mouse and record it in a file. After the sampling period, calculations are performed to determine conditions for activating the system. Once done, the trial period starts, which will start the closed loop system.
+
+
+
 # Setting Up
 
 ### Installing DeepLabCut Live
@@ -30,12 +35,12 @@ MousePupilTracker
 │   ├───DLC_Mice_resnet_50_iteration-1_shuffle-1
 │   ├───Arduino.py
 │   ├───Controller.py
-│   ├───Graph.y
+│   ├───Graph.py
+|   ├───GUI.py
 │   ├───Logger.py
 │   ├───PupilProcessor.py
 │   ├───ThresholdCalculator.py
-│   └───Webcamp.y
-├───GUI.py
+│   └───Webcamp.py
 ├───MouseTracker.py
 └───Main.py
 ```
