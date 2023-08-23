@@ -47,8 +47,8 @@ def main():
     graph = Graph.Graph(config)
     graph_diameter = multiprocessing.Value('d', 0.0)
     graph_speed = multiprocessing.Value('d', 0.0)
-    graph_thresh = multiprocessing.Value('d', -9999)
-    p = multiprocessing.Process(target=graph.plot, args=(graph_diameter, graph_speed, graph_thresh))
+    graph_thresh = multiprocessing.Array('d', [float("nan"), float("nan")])
+    p = multiprocessing.Process(target=graph.plot, args=(graph_diameter, graph_speed, graph_thresh, config))
     p.start()
 
 
@@ -98,9 +98,12 @@ def main():
             calc = TC.ThresholdCalculator(logger.getDirec())
             calc.run()
             controller.start(calc.getMean(), calc.getSTD())
-            thresh_mean = calc.getMean()
-            thresh_std = calc.getSTD()
-            graph_thresh.value = float(config["EYE_THRESHOLD"])*calc.getSTD() + calc.getMean() # Updates graph about threshold
+            threshMean = calc.getMean()
+            threshSTD = calc.getSTD()
+            print(threshMean)
+            print(threshSTD)
+            graph_thresh[0] = threshMean
+            graph_thresh[1] = threshSTD
             startTime = time.time()
             mode = 3
 
@@ -114,11 +117,7 @@ def main():
                 controller.updateValues(dia, spe)
         
         # Updates the graph about the diameter and speed
-        if graph_thresh != -9999 and mode == 3:
-            graph_diameter.value = (dia - thresh_mean)/thresh_std
-        else:
-            graph_diameter.value = dia
-        graph_speed.value  = spe      
+        graph_diameter.value, graph_speed.value = dia, spe      
 
     # Ends the program
     dlc_live.close()

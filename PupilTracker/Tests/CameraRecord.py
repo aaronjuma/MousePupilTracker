@@ -3,7 +3,7 @@ import cv2
 cap= cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FPS, 30)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)   
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 180)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 cap.set(cv2.CAP_PROP_BRIGHTNESS, 0)
 cap.set(cv2.CAP_PROP_CONTRAST, 64)
 cap.set(cv2.CAP_PROP_HUE, 0)
@@ -15,7 +15,7 @@ cap.set(cv2.CAP_PROP_EXPOSURE, -6)
 
 width= int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height= int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-writer= cv2.VideoWriter('Data/Videos/basicvideo.mp4', cv2.VideoWriter_fourcc(*"MPJG"), 30.0, (width,height))
+writer= cv2.VideoWriter('basicvideo.mp4', cv2.VideoWriter_fourcc(*"MPJG"), 30.0, (width,height))
 record = False
 
 while True:

@@ -37,6 +37,8 @@ class Webcam:
         self.cam.set(cv2.CAP_PROP_GAMMA, 100)
         self.cam.set(cv2.CAP_PROP_GAIN, 0)
         self.cam.set(cv2.CAP_PROP_EXPOSURE, -6)
+        print(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH))
+        print(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
         # Loads camera
         grabbed, frame = self.cam.read()

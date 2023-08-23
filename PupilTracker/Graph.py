@@ -4,6 +4,7 @@ This class is responsible graphing the speed value, the pupil value,
 and the pupil threshold value live.
 """
 import time
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
@@ -29,7 +30,8 @@ class Graph:
         # Individual data variables
         self.diameter = 0
         self.speed = 0
-        self.thresh = -9999
+        self.thresh = []
+        self.threshValue = 0
 
         # Gets config file and starts time
         self.config = config
@@ -48,7 +50,7 @@ class Graph:
         self.ys_diameter.append(self.diameter.value)
         self.ys_speed.append(self.speed.value)
         
-        # Crops the log arrays to get the last 100 instances (100 seconds of data)
+        # Crops the log arrays to get the last 100 instances (25 seconds of data)
         self.xs = self.xs[-100:]
         self.ys_diameter = self.ys_diameter[-100:]
         self.ys_speed = self.ys_speed[-100:]
@@ -58,15 +60,16 @@ class Graph:
         self.ax.set_xlabel('Time (s)')
 
         # Checks if a new threshold has been made
-        if self.thresh.value != -9999:
-            # Updates the threshold value
-            self.ax.axhline(y = self.thresh.value, color = 'g', linestyle = '-')
-            self.ax.set_ylim([-3, 3])
-            self.ax.set_ylabel('Eye Diameter (Z-Score)', color='tab:red', labelpad=15)
-        else:
+        if np.isnan(self.thresh[0]) and np.isnan(self.thresh[1]):
             self.ax.set_ylabel('Eye Diameter (pixels)', color='tab:red', labelpad=15)
-
-        self.ax.plot(self.xs, self.ys_diameter, color = 'tab:red')
+            self.ax.plot(self.xs, self.ys_diameter, color = 'tab:red')
+        else:
+            # Updates the threshold value
+            self.ys_diameter_zscore = (np.array(self.ys_diameter) - self.thresh[0])/self.thresh[1]
+            self.ax.set_ylabel('Eye Diameter (Z-Score)', color='tab:red', labelpad=15)
+            self.ax.plot(self.xs, self.ys_diameter_zscore, color = 'tab:red')
+            self.ax.axhline(y = self.threshValue, color = 'g', linestyle = '-')
+            self.ax.set_ylim([-3, 3])
         self.ax.tick_params(axis='y', labelcolor='tab:red')
 
         # Updates the Speed Graph
@@ -89,12 +92,13 @@ class Graph:
     Input: Multiprocessing Value variables of diameter, speed, and threshold
     Output: None
     """
-    def plot(self, diameter, speed, thresh):
+    def plot(self, diameter, speed, thresh, config):
 
         # Updates the variables with the Multiprocessing Value Object
         self.diameter = diameter
         self.speed = speed
         self.thresh = thresh
+        self.threshValue = config["EYE_THRESHOLD"]
 
         # Plots the graph in real time
         ani = animation.FuncAnimation(self.fig, self.animate, interval=250, cache_frame_data=False)
