@@ -22,8 +22,9 @@ These can be installed using the anaconda environment that was used to install d
 ```
 activate dlc-live
 ```
-Next, locate this repository directory. Once at the root directory for this project, enter:
+Next, locate this repository directory. Once at the root directory for this project, you can pip install the required libraries.
 ```
+cd ....../MousePupilTracker
 pip install -r requirements.txt
 ```
 
