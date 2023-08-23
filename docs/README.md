@@ -16,8 +16,16 @@ Follow this [tutorial.](https://github.com/DeepLabCut/DeepLabCut-live/blob/maste
 - numpy
 - opencv
 - pyserial
-- tkinter
-- yaml
+- PyYAML
+
+These can be installed using the anaconda environment that was used to install deeplabcut-live. First, activate the anaconda environment
+```
+activate dlc-live
+```
+Next, locate this repository directory. Once at the root directory for this project, enter:
+```
+pip install -r requirements.txt
+```
 
 # Project Outline
 ```
