@@ -107,6 +107,9 @@ updateValues - Gets the speed and diameter values from MouseTracker.py and updat
 getStatus    - Helper function (used for Logger.py) to determine the status of system (1 if on, 0 if off)
 ```
 
+Below is the flowchart the lays out the logic of the controller.
+![Controller Flowchart](ControllerFlowchart.png)
+
 ### Graph.py
 This class is responsible graphing the speed value, the pupil value, and the pupil threshold value live. During the sampling period, it will only display the pupil size and the speed. But after the sampling period, it will display the threshold after the calculations are done. The `animate` function is responsible for setting up the values and the graph, this function will be called repeatedly by the matplotlib `FuncAnimation` function. The `plot` function is responsible for setting up the animation function and running the plot live.
 
