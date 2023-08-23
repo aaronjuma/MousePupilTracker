@@ -58,6 +58,7 @@ class Controller:
     Output: None
     """
     def stop(self):
+        self.deactivate()
         self.running = False
 
 
@@ -94,7 +95,7 @@ class Controller:
             if self.signalSent == False:
 
                 # Checks if the speed reached the threshold and if the diameter reached its threshold
-                if (self.speed < self.speedThreshold and diam >= self.eyeThreshold):
+                if (abs(self.speed) < self.speedThreshold and diam >= self.eyeThreshold):
 
                     # If it is the first time reaching the threshold, starts a timer
                     if potential == False:
