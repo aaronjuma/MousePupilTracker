@@ -32,6 +32,8 @@ class Controller:
         self.eyeThreshold = config["EYE_THRESHOLD"]
         self.activationTime = config["ACTIVATION_TIME"]
         self.deactivationTime = config["DEACTIVATION_TIME"]
+        self.maxActivationDuration = config["MAX_ACTIVATION_DURATION"]
+        self.pupilActivationCondition = config["ACTIVATION_ABOVE_BELOW"]
         self.mean = 0
         self.std = 1
 
@@ -95,7 +97,7 @@ class Controller:
             if self.signalSent == False:
 
                 # Checks if the speed reached the threshold and if the diameter reached its threshold
-                if (abs(self.speed) < self.speedThreshold and diam >= self.eyeThreshold):
+                if (abs(self.speed) < self.speedThreshold and self.pupilCondition(diam)):
 
                     # If it is the first time reaching the threshold, starts a timer
                     if potential == False:
@@ -126,8 +128,15 @@ class Controller:
             else:
                 timeDiff = time.time() - timeSinceSignal
 
+                # Checks if the laser has been on for too long
+                if timeDiff >= self.maxActivationDuration:
+                    self.deactivate()
+                    print("deactive")
+                    potential = False
+                    self.signalSent = False
+
                 # Checks for pupil size condition
-                if diam < self.eyeThreshold:
+                if not self.pupilCondition(diam):
 
                     # Deactives the system
                     self.deactivate()
@@ -161,6 +170,12 @@ class Controller:
                 else:
                     speedHigher = False
 
+
+    def pupilCondition(self, diameter):
+        if self.pupilActivationCondition == "ABOVE":
+            return diameter >= self.eyeThreshold
+        else:
+            return diameter < self.eyeThreshold
 
     """
     Activates the system by sending the signal to the arduino

@@ -1,4 +1,5 @@
 import tkinter
+import tkinter.messagebox
 import yaml
 
 class GUI:
@@ -50,6 +51,22 @@ class GUI:
         self.cc_deactivationTimeEntry.grid(row=3, column=1)
         self.cc_deactivationTimeEntry.insert(0, self.config["DEACTIVATION_TIME"])
 
+        # Activation Duration
+        self.cc_maxActivationDuration = tkinter.Label(self.cc, text="Max Activation Duration (s)")
+        self.cc_maxActivationDuration.grid(row=4, column=0)
+        self.cc_maxActivationDurationEntry = tkinter.Entry(self.cc)
+        self.cc_maxActivationDurationEntry.grid(row=5, column=0)
+        self.cc_maxActivationDurationEntry.insert(0, self.config["MAX_ACTIVATION_DURATION"])
+
+        # Above or Below Pupil Threshold
+        self.cc_aboveThresh = tkinter.Label(self.cc, text="Activate Pupil Above or Below?")
+        self.cc_aboveThresh.grid(row=6, column=0)
+        self.cc_aboveBelowOption = tkinter.StringVar(self.cc, self.config["ACTIVATION_ABOVE_BELOW"])
+        self.cc_aboveThreshButton = tkinter.Radiobutton(self.cc, variable= self.cc_aboveBelowOption, text="Above", value="ABOVE")
+        self.cc_aboveThreshButton.grid(row=7, column=0)
+        self.cc_belowThreshButton = tkinter.Radiobutton(self.cc, variable= self.cc_aboveBelowOption, text="Below", value="BELOW")
+        self.cc_belowThreshButton.grid(row=7, column=1)
+
         for widget in self.cc.winfo_children():
             widget.grid_configure(padx=10, pady=5)
 
@@ -89,6 +106,7 @@ class GUI:
         configDict["DEACTIVATION_TIME"] = self.cc_deactivationTimeEntry.get()
         configDict["SAMPLE_DURATION"] = self.st_sampleDurationEntry.get()
         configDict["TRIAL_DURATION"] = self.st_trialDurationEntry.get()
+        configDict["MAX_ACTIVATION_DURATION"] = self.cc_maxActivationDurationEntry.get()
 
         for i in configDict:
             try:
@@ -97,7 +115,9 @@ class GUI:
                 tkinter.messagebox.showwarning(title= "Error", message="Invalid Numeric Options")
                 return
             
-        if float(configDict["ACTIVATION_TIME"]) < 0 or float(configDict["DEACTIVATION_TIME"]) < 0 or float(configDict["SAMPLE_DURATION"]) < 0 or float(configDict["TRIAL_DURATION"]) < 0:
+        if float(configDict["ACTIVATION_TIME"]) < 0 or float(configDict["DEACTIVATION_TIME"]) < 0 or \
+            float(configDict["SAMPLE_DURATION"]) < 0 or float(configDict["TRIAL_DURATION"]) < 0 or \
+            float(configDict["MAX_ACTIVATION_DURATION"]) < 0:
             tkinter.messagebox.showwarning(title= "Error", message="Cannot have negative time")
             return
         
@@ -107,6 +127,8 @@ class GUI:
         self.config["DEACTIVATION_TIME"] = float(configDict["DEACTIVATION_TIME"])
         self.config["SAMPLE_DURATION"] = float(configDict["SAMPLE_DURATION"])
         self.config["TRIAL_DURATION"] = float(configDict["TRIAL_DURATION"])
+        self.config["MAX_ACTIVATION_DURATION"] = float(configDict["MAX_ACTIVATION_DURATION"])
+        self.config["ACTIVATION_ABOVE_BELOW"] = self.cc_aboveBelowOption.get()
 
         with open("Data/config.yaml", 'w') as file:
             yaml.dump(self.config, file)  
