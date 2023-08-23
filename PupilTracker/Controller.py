@@ -134,6 +134,7 @@ class Controller:
                     print("deactive")
                     potential = False
                     self.signalSent = False
+                    continue
 
                 # Checks for pupil size condition
                 if not self.pupilCondition(diam):
@@ -143,6 +144,7 @@ class Controller:
                     print("deactive")
                     potential = False
                     self.signalSent = False
+                    continue
 
                 #Checks for speed condition
                 if abs(self.speed) >= self.speedThreshold:
