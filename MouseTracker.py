@@ -98,8 +98,8 @@ def main():
             calc = TC.ThresholdCalculator(logger.getDirec())
             calc.run()
             controller.start(calc.getMean(), calc.getSTD())
-            print(calc.getMean())
-            print(calc.getSTD())
+            thresh_mean = calc.getMean()
+            thresh_std = calc.getSTD()
             graph_thresh.value = float(config["EYE_THRESHOLD"])*calc.getSTD() + calc.getMean() # Updates graph about threshold
             startTime = time.time()
             mode = 3
@@ -114,9 +114,14 @@ def main():
                 controller.updateValues(dia, spe)
         
         # Updates the graph about the diameter and speed
-        graph_diameter.value, graph_speed.value  = dia, spe      
+        if graph_thresh != -9999 and mode == 3:
+            graph_diameter.value = (dia - thresh_mean)/thresh_std
+        else:
+            graph_diameter.value = dia
+        graph_speed.value  = spe      
 
     # Ends the program
+    dlc_live.close()
     p.terminate()
     logger.stop()
     arduino.stop()

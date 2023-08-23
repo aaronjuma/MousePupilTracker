@@ -56,18 +56,22 @@ class Graph:
         # Updates the Pupil Size Graph
         self.ax.clear()
         self.ax.set_xlabel('Time (s)')
-        self.ax.set_ylabel('Eye Diameter (pixels)', color='tab:red', labelpad=15)
-        self.ax.plot(self.xs, self.ys_diameter, color = 'tab:red')
-        self.ax.tick_params(axis='y', labelcolor='tab:red')
 
         # Checks if a new threshold has been made
         if self.thresh.value != -9999:
             # Updates the threshold value
             self.ax.axhline(y = self.thresh.value, color = 'g', linestyle = '-')
+            self.ax.set_ylim([-3, 3])
+            self.ax.set_ylabel('Eye Diameter (Z-Score)', color='tab:red', labelpad=15)
+        else:
+            self.ax.set_ylabel('Eye Diameter (pixels)', color='tab:red', labelpad=15)
+
+        self.ax.plot(self.xs, self.ys_diameter, color = 'tab:red')
+        self.ax.tick_params(axis='y', labelcolor='tab:red')
 
         # Updates the Speed Graph
         self.ax2.clear()
-        self.ax2.set_ylabel('Speed (pixels)', color='tab:blue', labelpad=15)
+        self.ax2.set_ylabel('Speed (cm/s)', color='tab:blue', labelpad=15)
         self.ax2.plot(self.xs, self.ys_speed, color = 'tab:blue')
         self.ax2.tick_params(axis='y', labelcolor='tab:blue')
         self.ax2.yaxis.set_label_position("right")
