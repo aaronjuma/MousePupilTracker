@@ -1,5 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "port": "COM1",
-    "sketch": "DLC-LIVE.ino"
-}
