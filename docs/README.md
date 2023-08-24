@@ -165,10 +165,12 @@ getFrame  - Gets the current camera frame, does some pre-processing, and returns
 ```
 
 ## GUI.py
-This class is responsible for setting up the GUI at the beginning where trial parameters can be changed.
+This class is responsible for setting up the GUI at the beginning where trial parameters can be changed. The GUI is seperated into two sections: The Controller Conditions and the Sample/Trial Conditions. The Controller Conditions frame contains the labels and the text entries that is used to modify the parameters for the controller. The Sample/Trial Conditions frame contains the labels and text entires for changing the parameters of the sample and trial durations. When the GUI is first started, it loads the config.yaml file to load the previous parameters from the last time it was run. Once the start button is clicked, it will save all those parameters into the config.yaml file.
+
+![GUI](https://github.com/aaronjuma/MousePupilTracker/assets/44382744/06ce64bc-b878-4cc6-b352-a44a02a0cc09)
 
 ## Main.py
-This is the main file which runs everything
+This is the main file which runs everything. It will first start the GUI, where parameters can be changed. Once the parameters are changed and the start button is clicked, it will start the MouseTracker program.
 
 ## MouseTracker.py
 This is the central station, where it controls the flow of the program. It is responsible for setting up the Camera, the Arduino, the PupilProcessor, the Logger, the Grapher, and the Controller. Here is where most of the information is sent to, and the MouseTracker program is able to control where and what information is sent. General flow chart of the mouse tracker:
