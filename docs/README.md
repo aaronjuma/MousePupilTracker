@@ -28,6 +28,17 @@ cd ....../MousePupilTracker
 pip install -r requirements.txt
 ```
 
+# Running the Project
+The project can be used by running `main.py`. Open up Anaconda prompt and make sure to activate the environment if not done so already. Afterwards, locate the directory for this file.
+```
+activate dlc-live
+cd ...../MousePupilTracker
+```
+Next, you want to type in this command and it should run the program.
+```
+python main.py
+```
+
 # Project Outline
 ```
 MousePupilTracker
