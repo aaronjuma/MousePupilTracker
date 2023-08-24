@@ -122,7 +122,14 @@ Below is the flowchart the lays out the logic of the controller.
 ![Controller Flowchart](ControllerFlowchart.png)
 
 ### Graph.py
-This class is responsible graphing the speed value, the pupil value, and the pupil threshold value live. During the sampling period, it will only display the pupil size and the speed. But after the sampling period, it will display the threshold after the calculations are done. The `animate` function is responsible for setting up the values and the graph, this function will be called repeatedly by the matplotlib `FuncAnimation` function. The `plot` function is responsible for setting up the animation function and running the plot live.
+This class is responsible graphing the speed value, the pupil value, and the pupil threshold value live. During the sampling period, it will only display the pupil size and the speed. But after the sampling period, it will display the threshold after the calculations are done. The `animate` function is responsible for setting up the values and the graph, this function will be called repeatedly by the matplotlib `FuncAnimation` function. The `plot` function is responsible for setting up the animation function and running the plot live. When the graph process is started, it will be given three parameters `diameter`, `speed`, `thresh`, and `config`. `config` is used to retrieve the threshold value and plot it on the graph when trial period starts. The other three: `diameter`, `speed`, and `thresh` are all Multiprocessing variables, which are able to share data between two processes (since the grapher is running on a seperate process since matplotlib doesn't work on a thread). The `MouseTracker.py` file will constantly update `diameter` and `speed` so that the graphing process can plot it live. The `thresh` variable is actually an array containing two items. At the beginning of the program, the two items are NaN, but after the sample period and the mean and standard deviation are calculated, those values will fill the array.
+
+```
+thresh[0] = mean
+thresh[1] = std
+```
+
+The `thresh` array is used so that it can perform Z-score calculations during the trial period and plot it on the graph.
 
 ### Logger.py
 This class is responsible for logging all the data into files, like the pupil size, the disk speed bins, and timestamps of system activation. It has two "modes" for logging. The first is **Sample**, which only records the pupil size, this will generate the `Sample.csv` file. The second is **Trial**, which records the pupil size, the timestamps, and the disk speed bins. In **Trial** mode, it generates two different files: `Trial.csv` and `Speed.csv`. It contains 8 functions.
@@ -155,6 +162,26 @@ This class is responsible for doing the pupil diameter calculations by getting t
 
 Once the frame has been processed and the data points are collected, the code looks to see if there is a confident center. If it is, it records the position of it and loops through all the other data points. It checks each data point to see if its confidence (greater than 0.8), and if it is a good and active point, it calculates its distance from the center, basically calculating radius. The calculated radiuses are then averaged and multiplied by 2, giving the average diameter.
 
+In the code, there will a variable called `pose`. `pose` contains all the points, its coordinates, and its confidence (how certain is that point an actual pointer as determined by the model) stored into an array arranged like this:
+```
+Index:       0     1       2
+             x     y    confidence
+0  centre   20    30    0.99
+1  top      80    200   0.98
+2  bottom   10    10    0.83
+...
+```
+
+So for example, if you wanted to access the left data point's coordinates. You would have to call
+```
+x = pose[3, 0]
+y = pose[3, 1]
+
+The first number in the brackets represent which item (row) you want to use (left = 3).
+The second number in the brackets represent which property (column) you want to use (x = 0, y = 1, confidence = 2).
+```
+
+
 ### ThresholdCalculator.py
 This class is responsible for calculating the threshold by getting the Sample data and calculating the standard deviation and mean. After calculating, it will store those values to the `ThresholdParams.txt` file. This class is only used right after the sampling period has ended. It has 4 functions.
 
@@ -175,7 +202,7 @@ close     - Turns off the camera
 getFrame  - Gets the current camera frame, does some pre-processing, and returns the frame
 ```
 
-## GUI.py
+### GUI.py
 This class is responsible for setting up the GUI at the beginning where trial parameters can be changed. The GUI is seperated into two sections: The Controller Conditions and the Sample/Trial Conditions. The Controller Conditions frame contains the labels and the text entries that is used to modify the parameters for the controller. The Sample/Trial Conditions frame contains the labels and text entires for changing the parameters of the sample and trial durations. When the GUI is first started, it loads the config.yaml file to load the previous parameters from the last time it was run. Once the start button is clicked, it will save all those parameters into the config.yaml file.
 
 ![GUI](https://github.com/aaronjuma/MousePupilTracker/assets/44382744/06ce64bc-b878-4cc6-b352-a44a02a0cc09)
