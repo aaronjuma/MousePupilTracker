@@ -78,33 +78,37 @@ void loop() {
     //Checks if it is the first time sending TTL Pulse to start pulse train
     if (active == false){
       active = true;
+      isOn = true;
       digitalWrite(13, HIGH);
       timeSinceOn = millis();
     }
 
-    //If the signal is currently high
-    if (isOn == true) {
-
-      //Checks if it has reached the timeOn duration
-      if(millis() - timeSinceOn > timeOn){
-
-        //Set pulse to low
-        isOn = false;
-        digitalWrite(13, LOW);
-        timeSinceOff = millis();
-      }
-    }
-
-    //If the pulse is currently low
+    //If it is not the first time sending TTL Pulse
     else{
+      //If the signal is currently high
+      if (isOn == true) {
 
-      // Checks if it has reached the timeOff duration
-      if(millis() - timeSinceOff > timeOff) {
+        //Checks if it has reached the timeOn duration
+        if(millis() - timeSinceOn > timeOn){
 
-        //Set the pulse to high
-        isOn = true;
-        digitalWrite(13, HIGH);
-        timeSinceOn = millis();
+          //Set pulse to low
+          isOn = false;
+          digitalWrite(13, LOW);
+          timeSinceOff = millis();
+        }
+      }
+
+      //If the pulse is currently low
+      else{
+
+        // Checks if it has reached the timeOff duration
+        if(millis() - timeSinceOff > timeOff) {
+
+          //Set the pulse to high
+          isOn = true;
+          digitalWrite(13, HIGH);
+          timeSinceOn = millis();
+        }
       }
     }
   }
