@@ -185,6 +185,7 @@ This is the main file which runs everything. It will first start the GUI, where 
 
 ## MouseTracker.py
 This is the central station, where it controls the flow of the program. It is responsible for setting up the Camera, the Arduino, the PupilProcessor, the Logger, the Grapher, and the Controller. Here is where most of the information is sent to, and the MouseTracker program is able to control where and what information is sent. General flow chart of the mouse tracker:
+![Mouse Tracker Flowchart](https://github.com/aaronjuma/MousePupilTracker/assets/44382744/ab1540ad-3c87-4907-9f78-e6a7341375fa)
 
 
   
