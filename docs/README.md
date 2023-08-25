@@ -65,6 +65,10 @@ MousePupilTracker
 └───Main.py
 ```
 
+Below shown is the general layout of how these modules communicate with the MouseTracker program and how the other components interact with each other.
+![Layout of Program](https://github.com/aaronjuma/MousePupilTracker/assets/44382744/02890c3a-da71-4882-9555-f01e4beb6ba5)
+
+
 ## Arduino
 The Arduino folder will contain the .ino file that controls the Arduino. The Arduino is responsible for calculating the speed of the running disk and sending it to the computer, and it also receives signals from the computer if it needs to fire a TTL pulse. If the Arduino receives a signal of `1`, it will turn on the pulse code. If the Arduino receives a signal of `0`, it will turn off the pulse code. The Arduino code has three changeable parameters: `timeOn`, `timeOff`, `radius`. 
 
@@ -73,6 +77,22 @@ timeOn   - how long the TTL signal is on per pulse
 timeOff  - how long the TTL signal is off per pulse
 radius   - radius of the running disk
 ```
+
+The Arduino layout is as follows:
+![Arduino Layout](https://github.com/aaronjuma/MousePupilTracker/assets/44382744/be24df7c-4a3f-4c99-955d-b37d426c7b2b)
+
+***NOTE***: Components in the image are just representations (the actual parts I couldn't find, so I used something similar). The wire colors are accurate. The light bulb is supposed to represent the optogenetic machine. The motor encoder is supposed to have 4 wires only. And the LED represents the light source inside the cage.
+
+The important pins are:
+```
+Pin         Type of I/O               Purpose
+-----------------------------------------------------------
+Pin 13      Digital Output            To produce TTL Signal, connects to the Doric LED Driver
+Pin 10      Digital Output            To power the light source inside the cage
+Pin 2       Digital Input             To get the first input of the quadrature encoder, for the running disk
+Pin 3       Digital Input             To get the second input of the quadrature encoder, for the running disk
+```
+All the components will need to be connected to a ground (black). The running disk will need to be connected to a 5V source (connect red to 5V).
 
 ## Data
 The Data folder will contain the `config.yaml` file and the `Logs` folder. The `config.yaml` file will save the parameters that is displayed in the GUI. Generally, this file does not need to be editted since any changes you add in the GUI will automatically load it onto the config file. The `Logs` folder will contain log information such as pupil size, speed bins, and timestamps of on and off for each trial. Each time the program is run, it will create a new folder inside the `Logs` folder, and dump all the information there.
