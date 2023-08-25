@@ -116,6 +116,9 @@ ThresholdParams.txt  - After the sampling period, it will calculate the mean and
 ## PupilTracker
 The PupilTracker contains Python modules that help the program function. It also contains the DeepLabCut model that is used for live tracking of the pupil size.
 
+![Pupil](https://github.com/aaronjuma/MousePupilTracker/assets/44382744/9d8caf6e-363d-4c1b-9977-3242d5740dd1)
+
+
 ### Arduino.py
 This class is responsible for recieving and sending data to and from the arduino. It automatically looks at each serial port and sets up an arduino object. It then starts a daemon thread that will run in the background constantly receiving data from the arduino. An individual speed data is saved in a variable called `data`, and the speed bins that contain 1 second worth of data spaced at 10ms intervals is stored in the `bin` array. It is also responsible for sending signals to the Arduino, which will be used to activate a TTL pulse. The `Arduino.py` file contains 9 functions:
 
@@ -157,6 +160,9 @@ thresh[1] = std
 ```
 
 The `thresh` array is used so that it can perform Z-score calculations during the trial period and plot it on the graph.
+
+![Graph](https://github.com/aaronjuma/MousePupilTracker/assets/44382744/140d98d0-c75d-4380-950e-75b6c1378782)
+
 
 ### Logger.py
 This class is responsible for logging all the data into files, like the pupil size, the disk speed bins, and timestamps of system activation. It has two "modes" for logging. The first is **Sample**, which only records the pupil size, this will generate the `Sample.csv` file. The second is **Trial**, which records the pupil size, the timestamps, and the disk speed bins. In **Trial** mode, it generates two different files: `Trial.csv` and `Speed.csv`. It contains 8 functions.
