@@ -22,14 +22,12 @@ def main():
     cam = Webcam.Webcam()
     if cam.start() == False:
         print("Camera Error")
-        os.system('pause')
         return False
     
     # Sets up the arduino and ends program if no arduino is found
     arduino = Arduino.Arduino()
     if arduino.status() == False:
         print("Unable to find arduino")
-        os.system('pause')
         return False
     arduino.start()
     controller = Controller.Controller(arduino, config)
@@ -74,6 +72,7 @@ def main():
         dlc_live.get_pose(frame)
         dia = dlc_proc.getDiamater()
         spe = arduino.getValue()
+        
 
         # Initialize the Sampling Period
         if mode == 0:
@@ -95,11 +94,8 @@ def main():
             logger.setType("TRIAL")
 
             # Controller updates threshold
-            calc = TC.ThresholdCalculator(logger.getDirec())
-            calc.run()
-            controller.start(calc.getMean(), calc.getSTD())
-            threshMean = calc.getMean()
-            threshSTD = calc.getSTD()
+            threshMean, threshSTD = TC.getThresholdParams(logger.getDirec())
+            controller.start(threshMean, threshSTD)
             print(threshMean)
             print(threshSTD)
             graph_thresh[0] = threshMean
@@ -117,7 +113,8 @@ def main():
                 controller.updateValues(dia, spe)
         
         # Updates the graph about the diameter and speed
-        graph_diameter.value, graph_speed.value = dia, spe      
+        graph_diameter.value, graph_speed.value = dia, spe
+
 
     # Ends the program
     dlc_live.close()
@@ -126,6 +123,5 @@ def main():
     arduino.stop()
     controller.stop()
     cam.close()
-    os.system('pause')
     print("Exiting program...")
     return True

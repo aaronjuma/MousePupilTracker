@@ -173,6 +173,11 @@ class Controller:
                     speedHigher = False
 
 
+    """
+    Pupil Conditions for Activating the System
+    Input: Calculated Z-Scored diameter
+    Output: True if conditions are met, False if not
+    """
     def pupilCondition(self, diameter):
         if self.pupilActivationCondition == "ABOVE":
             return diameter >= self.eyeThreshold
