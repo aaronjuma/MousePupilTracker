@@ -116,7 +116,6 @@ class Controller:
                             # Activates the system
                             self.signalSent = True
                             self.activate()
-                            print("activated")
                             potential = False
                             timeSinceSignal = time.time()
 
@@ -131,7 +130,6 @@ class Controller:
                 # Checks if the laser has been on for too long
                 if timeDiff >= self.maxActivationDuration:
                     self.deactivate()
-                    print("deactive")
                     potential = False
                     self.signalSent = False
                     continue
@@ -141,7 +139,6 @@ class Controller:
 
                     # Deactives the system
                     self.deactivate()
-                    print("deactive")
                     potential = False
                     self.signalSent = False
                     continue
@@ -162,7 +159,6 @@ class Controller:
                         if timeDifference >= self.deactivationTime:
 
                             # Deactivates the system
-                            print("deactive")
                             self.deactivate()
                             potential = False
                             self.signalSent = False
@@ -192,6 +188,7 @@ class Controller:
     """
     def activate(self):
         self.arduino.write(1)
+        print("activated")
 
 
     """
@@ -202,6 +199,7 @@ class Controller:
     """
     def deactivate(self):
         self.arduino.write(0)
+        print("deactive")
 
 
     """
